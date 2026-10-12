@@ -1,0 +1,7 @@
+.next
+.next-sites
+node_modules
+dist
+out
+package-lock.json
+audit.json

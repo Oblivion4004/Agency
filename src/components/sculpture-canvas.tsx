@@ -1,0 +1,125 @@
+"use client";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Environment, Lightformer, Float } from "@react-three/drei";
+import { useRef } from "react";
+import * as THREE from "three";
+function Form({ color, product }: { color: string; product: boolean }) {
+  const mesh = useRef<THREE.Group>(null);
+  useFrame((state, delta) => {
+    if (!mesh.current) return;
+    const targetY = state.pointer.x * 0.45 + state.clock.elapsedTime * 0.055;
+    mesh.current.rotation.y = THREE.MathUtils.damp(
+      mesh.current.rotation.y,
+      targetY,
+      3,
+      delta,
+    );
+    mesh.current.rotation.x = THREE.MathUtils.damp(
+      mesh.current.rotation.x,
+      state.pointer.y * 0.25 + (product ? 0 : window.scrollY * 0.0004) + 0.35,
+      3,
+      delta,
+    );
+  });
+  return (
+    <Float speed={1.4} rotationIntensity={0.12} floatIntensity={0.25}>
+      <group ref={mesh} rotation={[0.35, 0, product ? -0.2 : 0.4]}>
+        {product ? (
+          <>
+            <mesh>
+              <cylinderGeometry args={[0.87, 0.87, 2.4, 64]} />
+              <meshStandardMaterial
+                color={color}
+                metalness={0.7}
+                roughness={0.4}
+              />
+            </mesh>
+            {Array.from({ length: 30 }, (_, i) => (
+              <mesh
+                key={i}
+                position={[0, -1.12 + i * 0.077, 0]}
+                rotation={[Math.PI / 2, 0, 0]}
+              >
+                <torusGeometry args={[0.875, 0.013, 6, 64]} />
+                <meshStandardMaterial
+                  color="#252b23"
+                  metalness={0.5}
+                  roughness={0.6}
+                />
+              </mesh>
+            ))}
+            <mesh position={[0, 1.21, 0]}>
+              <cylinderGeometry args={[0.79, 0.79, 0.025, 64]} />
+              <meshStandardMaterial
+                color="#20281d"
+                metalness={0.6}
+                roughness={0.3}
+              />
+            </mesh>
+            <mesh position={[0, -0.94, 0.88]}>
+              <sphereGeometry args={[0.025, 12, 12]} />
+              <meshStandardMaterial
+                color="#d6f76f"
+                emissive="#d6f76f"
+                emissiveIntensity={2}
+              />
+            </mesh>
+          </>
+        ) : (
+          <mesh>
+            <torusKnotGeometry args={[1.25, 0.42, 160, 32, 2, 3]} />
+            <meshStandardMaterial
+              color={color}
+              metalness={0.96}
+              roughness={0.22}
+            />
+          </mesh>
+        )}
+      </group>
+    </Float>
+  );
+}
+export default function SculptureCanvas({
+  color = "#adb997",
+  product = false,
+  active = true,
+  onFailure,
+}: {
+  color?: string;
+  product?: boolean;
+  active?: boolean;
+  onFailure: () => void;
+}) {
+  return (
+    <Canvas
+      dpr={[1, 1.5]}
+      frameloop={active ? "always" : "never"}
+      camera={{ position: [0, 0, 6.2], fov: 42 }}
+      gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
+      onCreated={({ gl }) => {
+        gl.domElement.addEventListener("webglcontextlost", onFailure, {
+          once: true,
+        });
+      }}
+    >
+      <ambientLight intensity={0.35} />
+      <directionalLight position={[3, 4, 5]} intensity={3} />
+      <Form color={color} product={product} />
+      <Environment resolution={128}>
+        <Lightformer intensity={4} position={[0, 4, -2]} scale={[10, 3, 1]} />
+        <Lightformer
+          intensity={3}
+          position={[-5, 1, 2]}
+          rotation={[0, Math.PI / 2, 0]}
+          scale={[5, 5, 1]}
+        />
+        <Lightformer
+          intensity={2}
+          position={[5, -2, 1]}
+          rotation={[0, -Math.PI / 2, 0]}
+          scale={[6, 2, 1]}
+        />
+      </Environment>
+    </Canvas>
+  );
+}

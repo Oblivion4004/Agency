@@ -1,0 +1,30 @@
+# ATRIXX — architecture & design plan
+
+## Information architecture
+
+- `/`: introduction → selected concept work → interactive lab → services → studio approach → project inquiry.
+- `/work/[slug]`: dedicated case studies, clearly labeled self-initiated concepts; brief, design response, interactive preview, intended business value, next project.
+- `/privacy`: clear handling of inquiry data.
+- `/api/contact`: server-side validation, Turnstile verification, shared rate limiting, email delivery with honest failure states.
+
+## Visual system
+
+Near-black #10110f, ivory #f1f0e8, muted #a6a79f, acid #d6f76f. Manrope variable type; oversized tightly tracked headlines with generous line height on body text. 1440px content maximum; 5vw gutters. Hairline rules, asymmetric compositions, small uppercase labels, large imagery, no generic feature-card grids. Native CSS/Three.js artwork, not external project imagery.
+
+## Component plan
+
+Header and accessible mobile navigation; magnetic CTA; editorial Hero; deferred SculptureCanvas with static SVG fallback; GSAP reveal orchestrator; ProjectVisual and ProjectGallery; tabbed ExperienceLab with product material control and interactive UI demo; service accordion; ContactForm; Footer. Server components provide meaningful content before JavaScript.
+
+## Motion & accessibility
+
+Transform/opacity animation only; no scroll hijacking. GSAP scoped contexts; Motion for local controls; Three.js via dynamically imported React Three Fiber. Suspend canvas offscreen, cap DPR, use static mode for reduced motion, save-data, unsupported WebGL, and small screens. Keyboard-accessible controls, skip link, visible focus, error summaries, minimum 44px touch targets.
+
+## Phases and validation
+
+1. Foundation: routes, content, typography, responsive layout. Lint, production build, content tests.
+2. Experience: 3D, scroll reveals, lab, mobile navigation. Lint, production build, interaction tests.
+3. Conversion: secure contact route, privacy, accessibility, responsive QA. Lint, build, server validation tests and browser checks.
+
+## Content integrity
+
+ATRIXX is the user-approved studio name, inspired by Atharva. All showcased projects are original, explicitly labeled concept work. No client relationships, endorsements, awards, or measured results are claimed. Contact delivery requires owner-provided email credentials and spam-protection configuration.

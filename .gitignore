@@ -1,0 +1,12 @@
+node_modules/
+.next/
+.next-sites/
+dist/
+audit.json
+*.tgz
+out/
+.env*
+!.env.example
+*.tsbuildinfo
+test-results/
+playwright-report/
