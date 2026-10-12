@@ -230,3 +230,85 @@
 .work-section .concept-note {
   color: #71604e;
 }
+
+/* The cup pours across, rather than stopping at, the hero boundary. */
+.home-page {
+  position: relative;
+  isolation: isolate;
+  --spill-paper: #f0e5d3;
+  --spill-ink: #36261d;
+  --spill-muted: #71604e;
+  --spill-liquid: #f0e5d3;
+}
+.page-coffee-spill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0;
+}
+.spill-river {
+  fill: var(--spill-liquid);
+}
+.spill-crema {
+  fill: none;
+  stroke: #f8ddb4;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.spill-runway {
+  position: relative;
+  height: 260px;
+  background: #151419;
+}
+.spill-runway > span {
+  position: absolute;
+  right: 6%;
+  top: 38%;
+  color: #e8cbae;
+  font: 9px var(--mono);
+  letter-spacing: 2px;
+}
+.home-page .work-section {
+  background: var(--spill-paper);
+  --fg: var(--spill-ink);
+  --muted: var(--spill-muted);
+}
+.home-page .work-section .concept-note {
+  color: var(--spill-muted);
+}
+.home-page .discipline-strip {
+  background: var(--spill-paper);
+  color: var(--spill-ink);
+  border-bottom: 1px solid #9b7d5d44;
+}
+.home-page .discipline-strip svg {
+  color: var(--spill-ink);
+}
+@media (max-width: 700px) {
+  .spill-runway {
+    height: 190px;
+  }
+  .spill-runway > span {
+    font-size: 7px;
+    letter-spacing: 1px;
+    top: 22%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-coffee-spill {
+    display: none;
+  }
+  .spill-runway {
+    height: 100px;
+    background: #f0e5d3;
+    border-radius: 50% 45% 0 0;
+  }
+  .spill-runway > span {
+    display: none;
+  }
+}

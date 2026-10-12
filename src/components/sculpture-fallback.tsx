@@ -43,6 +43,13 @@ export function SculptureFallback({ color = "#ff9669" }: { color?: string }) {
         />
         <ellipse cx="296" cy="427" rx="161" ry="37" fill="#d8c8ff" />
         <ellipse cx="296" cy="429" rx="99" ry="24" fill="#b5a0e1" />
+        <circle
+          className="fallback-rim"
+          cx="169"
+          cy="229"
+          r="1"
+          fill="transparent"
+        />
         <path
           d="M412 246 C519 209 520 365 410 366"
           fill="none"

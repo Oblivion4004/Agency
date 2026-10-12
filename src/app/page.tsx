@@ -8,7 +8,11 @@ import { ExperienceLab } from "@/components/experience-lab";
 import { ContactForm } from "@/components/contact-form";
 export default function Home() {
   return (
-    <main id="main">
+    <main id="main" className="home-page">
+      <svg className="page-coffee-spill" aria-hidden="true" focusable="false">
+        <path className="spill-river" />
+        <path className="spill-crema" />
+      </svg>
       <MotionEffects />
       <section className="hero arcade-hero" aria-labelledby="hero-title">
         <div className="hero-topline">
@@ -71,6 +75,9 @@ export default function Home() {
           </a>
         </div>
       </section>
+      <div className="spill-runway" aria-hidden="true">
+        <span>AN EXTRA SHOT OF POSSIBILITY ↓</span>
+      </div>
       <div className="discipline-strip">
         <span>LOCAL BUSINESS</span>
         <Plus />

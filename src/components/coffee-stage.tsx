@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { createCoffeeSpill } from "./coffee-spill";
 import { Sculpture } from "./sculpture";
 const finishes = [
   { name: "Peach", color: "#ff9669" },
@@ -11,6 +12,8 @@ const finishes = [
 export function CoffeeStage() {
   const stage = useRef<HTMLDivElement>(null);
   const progress = useRef(0);
+  const wash = useRef(0);
+  const pourOriginRef = useRef<{ x: number; y: number } | null>(null);
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const media = gsap.matchMedia();
@@ -26,7 +29,7 @@ export function CoffeeStage() {
           scrollTrigger: {
             trigger: desktop ? ".arcade-hero-grid" : stage.current,
             start: desktop ? "top top" : "top 55%",
-            end: desktop ? "+=600" : "bottom 25%",
+            end: desktop ? "+=850" : "bottom 15%",
             pin: desktop ? ".arcade-hero-grid" : false,
             scrub: 0.6,
             invalidateOnRefresh: true,
@@ -35,22 +38,40 @@ export function CoffeeStage() {
         timeline.to(progress, { current: 1, duration: 1, ease: "none" }, 0);
         timeline.to(
           stage.current,
-          { "--cup-turn": "360deg", duration: 0.65, ease: "none" },
+          { "--cup-turn": "360deg", duration: 0.48, ease: "none" },
           0,
         );
         timeline.to(
           stage.current,
           {
-            "--cup-tip": "-28deg",
-            "--drip-show": 1,
+            "--cup-tip": "-50deg",
+            "--drip-show": 0,
             "--drip-fall": "65px",
-            duration: 0.35,
+            duration: 0.3,
             ease: "none",
           },
-          0.65,
+          0.48,
+        );
+        gsap.to(wash, {
+          current: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".spill-runway",
+            start: "top 95%",
+            end: "bottom 85%",
+            scrub: 0.4,
+          },
+        });
+        const cleanup = createCoffeeSpill(
+          stage.current,
+          progress,
+          pourOriginRef,
+          wash,
         );
         return () => {
+          cleanup();
           progress.current = 0;
+          wash.current = 0;
         };
       },
     );
@@ -73,7 +94,11 @@ export function CoffeeStage() {
         <span>✳</span>
       </div>
       <div className="hero-art">
-        <Sculpture color={finishes[finish].color} progress={progress} />
+        <Sculpture
+          color={finishes[finish].color}
+          progress={progress}
+          pourOriginRef={pourOriginRef}
+        />
       </div>
       <div className="coffee-controls">
         <span>CHOOSE YOUR CUP</span>
@@ -95,7 +120,7 @@ export function CoffeeStage() {
         </span>
       </div>
       <span className="coffee-coordinate">
-        SCROLL TO SPIN. KEEP GOING TO POUR.
+        SCROLL TO POUR. WATCH THE PAGE CHANGE.
       </span>
     </div>
   );

@@ -8,28 +8,30 @@ function Form({
   color,
   product,
   progress,
+  pourOriginRef,
 }: {
   color: string;
   product: boolean;
   progress?: React.RefObject<number>;
+  pourOriginRef?: React.RefObject<{ x: number; y: number } | null>;
 }) {
   const mesh = useRef<THREE.Group>(null);
   useFrame((state, delta) => {
     if (!mesh.current) return;
     const scroll = product ? 0 : (progress?.current ?? 0);
     const targetY =
-      Math.min(scroll / 0.65, 1) * Math.PI * 2 +
+      Math.min(scroll / 0.48, 1) * Math.PI * 2 +
       state.pointer.x * 0.4 +
       Math.sin(state.clock.elapsedTime * 0.3) * 0.12;
     mesh.current.rotation.y = THREE.MathUtils.damp(
       mesh.current.rotation.y,
       targetY,
-      3,
+      12,
       delta,
     );
     mesh.current.rotation.z = THREE.MathUtils.damp(
       mesh.current.rotation.z,
-      -0.12 + Math.max(0, (scroll - 0.65) / 0.35) * 0.62,
+      -0.12 + Math.min(1, Math.max(0, (scroll - 0.48) / 0.3)) * 0.95,
       5,
       delta,
     );
@@ -85,7 +87,7 @@ function Form({
             </mesh>
           </>
         ) : (
-          <CoffeeModel color={color} progress={progress} />
+          <CoffeeModel color={color} pourOriginRef={pourOriginRef} />
         )}
       </group>
     </Float>
@@ -97,12 +99,14 @@ export default function SculptureCanvas({
   active = true,
   onFailure,
   progress,
+  pourOriginRef,
 }: {
   color?: string;
   product?: boolean;
   active?: boolean;
   onFailure: () => void;
   progress?: React.RefObject<number>;
+  pourOriginRef?: React.RefObject<{ x: number; y: number } | null>;
 }) {
   return (
     <Canvas
@@ -118,7 +122,12 @@ export default function SculptureCanvas({
     >
       <ambientLight intensity={0.35} />
       <directionalLight position={[3, 4, 5]} intensity={3} />
-      <Form color={color} product={product} progress={progress} />
+      <Form
+        color={color}
+        product={product}
+        progress={progress}
+        pourOriginRef={pourOriginRef}
+      />
       <Environment resolution={128}>
         <Lightformer intensity={4} position={[0, 4, -2]} scale={[10, 3, 1]} />
         <Lightformer

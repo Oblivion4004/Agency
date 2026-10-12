@@ -4,26 +4,24 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 export function CoffeeModel({
   color,
-  progress,
+  pourOriginRef,
 }: {
   color: string;
-  progress?: React.RefObject<number>;
+  pourOriginRef?: React.RefObject<{ x: number; y: number } | null>;
 }) {
-  const drops = useRef<THREE.Group>(null);
-  useFrame(() => {
-    if (!drops.current) return;
-    const pour = Math.max(0, ((progress?.current ?? 0) - 0.65) / 0.35);
-    drops.current.visible = pour > 0.02;
-    drops.current.children.forEach((drop, i) => {
-      const fall = (pour * 2.4 + i * 0.23) % 1;
-      drop.position.set(
-        -0.83 - fall * 0.35,
-        0.58 - fall * 2.5,
-        0.15 + fall * 0.15,
-      );
-      drop.scale.setScalar(Math.min(pour * 6, 1) * (1 - fall * 0.5));
-      drop.scale.y *= 1.8;
-    });
+  const cup = useRef<THREE.Group>(null);
+  const rim = useMemo(() => new THREE.Vector3(), []);
+  useFrame(({ camera, size }) => {
+    if (!cup.current || !pourOriginRef) return;
+    cup.current.updateWorldMatrix(true, false);
+    rim
+      .set(-0.84, 0.7, 0.12)
+      .applyMatrix4(cup.current.matrixWorld)
+      .project(camera);
+    pourOriginRef.current = {
+      x: ((rim.x + 1) * size.width) / 2,
+      y: ((1 - rim.y) * size.height) / 2,
+    };
   });
   const profile = useMemo(
     () =>
@@ -61,15 +59,7 @@ export function CoffeeModel({
     [],
   );
   return (
-    <group position={[-0.16, 0.05, 0]} scale={1.22}>
-      <group ref={drops} visible={false}>
-        {Array.from({ length: 5 }, (_, i) => (
-          <mesh key={i}>
-            <sphereGeometry args={[0.065, 12, 12]} />
-            <meshStandardMaterial color="#9b582f" roughness={0.18} />
-          </mesh>
-        ))}
-      </group>
+    <group ref={cup} position={[-0.16, 0.05, 0]} scale={1.22}>
       <mesh>
         <latheGeometry args={[profile, 64]} />
         <meshStandardMaterial color={color} roughness={0.26} metalness={0.08} />

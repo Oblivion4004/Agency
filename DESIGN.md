@@ -36,3 +36,7 @@ User-requested change: replace the abstract hero sculpture with coffee and make 
 ## Coffee scroll update
 
 Brand: ATRIXX WEB. Dark arcade hero transitions into cream paper and espresso typography. A short desktop scroll scene turns the cup once, then tilts it with scroll-driven droplets; reverse scrolling rewinds. Mobile uses the vector fallback without pinning. Reduced motion removes the sequence. Portfolio concepts remain explicitly labeled.
+
+## Continuous spill transition
+
+The projected 3D cup rim anchors a continuous SVG coffee river crossing the hero boundary. It widens into a full-width pool, then the liquid and following section change from coffee brown/dark to cream as the boundary enters view. Mobile uses the SVG rim; reduced motion keeps a static cream transition. Decorative layers ignore pointer input; observers stop geometry work offscreen.

@@ -33,10 +33,12 @@ export function Sculpture({
   color,
   product = false,
   progress,
+  pourOriginRef,
 }: {
   color?: string;
   product?: boolean;
   progress?: React.RefObject<number>;
+  pourOriginRef?: React.RefObject<{ x: number; y: number } | null>;
 }) {
   const root = useRef<HTMLDivElement>(null);
   const [enabled, setEnabled] = useState(false);
@@ -98,6 +100,7 @@ export function Sculpture({
             color={color}
             product={product}
             progress={progress}
+            pourOriginRef={pourOriginRef}
             active={visible}
             onFailure={() => setFailed(true)}
           />
