@@ -2,17 +2,18 @@ import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/manrope";
 import "./globals.css";
 import "./arcade.css";
+import "./coffee-theme.css";
 import { Header, Footer } from "@/components/shell";
 export const metadata: Metadata = {
   title: {
-    default: "ATRIXX — Small business. Big website energy.",
-    template: "%s — ATRIXX",
+    default: "ATRIXX WEB — Small business. Big website energy.",
+    template: "%s — ATRIXX WEB",
   },
   description:
     "Premium custom websites for cafés, shops, salons, and local services. Designed and developed by Atharva.",
   robots: { index: true, follow: true },
   openGraph: {
-    title: "ATRIXX — Level up your business online.",
+    title: "ATRIXX WEB — Level up your business online.",
     description:
       "Everyday businesses. Extraordinary websites. Custom design and development by Atharva.",
     type: "website",

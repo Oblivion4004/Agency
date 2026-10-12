@@ -53,8 +53,9 @@ export function Header() {
   }, [open]);
   return (
     <header className="site-header">
-      <Link href="/" className="wordmark" aria-label="Atrixx home">
-        atrixx<span className="wordmark-star">✳</span>
+      <Link href="/" className="wordmark" aria-label="Atrixx Web home">
+        atrixx<span className="wordmark-web">web</span>
+        <span className="wordmark-star">✳</span>
       </Link>
       <span className="header-descriptor">
         PREMIUM WEBSITES. EXTRA PERSONALITY.
@@ -99,11 +100,12 @@ export function Footer() {
   return (
     <footer className="site-footer">
       <Link className="wordmark" href="/">
-        atrixx<span className="wordmark-star">✳</span>
+        atrixx<span className="wordmark-web">web</span>
+        <span className="wordmark-star">✳</span>
       </Link>
       <span>Made by Atharva. Powered by curiosity & coffee.</span>
       <div>
-        <span>© {new Date().getFullYear()} ATRIXX</span>
+        <span>© {new Date().getFullYear()} ATRIXX WEB</span>
         <Link href="/privacy">Privacy</Link>
         <a href="#top" aria-label="Back to top">
           ↑

@@ -3,7 +3,7 @@ export const metadata = { title: "Privacy" };
 export default function Privacy() {
   return (
     <main id="main" className="section legal-page">
-      <p className="eyebrow">ATRIXX / PRIVACY</p>
+      <p className="eyebrow">ATRIXX WEB / PRIVACY</p>
       <h1>
         A little clarity
         <br />

@@ -4,23 +4,38 @@ import { Environment, Lightformer, Float } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 import { CoffeeModel } from "./coffee-model";
-function Form({ color, product }: { color: string; product: boolean }) {
+function Form({
+  color,
+  product,
+  progress,
+}: {
+  color: string;
+  product: boolean;
+  progress?: React.RefObject<number>;
+}) {
   const mesh = useRef<THREE.Group>(null);
   useFrame((state, delta) => {
     if (!mesh.current) return;
+    const scroll = product ? 0 : (progress?.current ?? 0);
     const targetY =
-      state.pointer.x * 0.4 + Math.sin(state.clock.elapsedTime * 0.3) * 0.12;
+      Math.min(scroll / 0.65, 1) * Math.PI * 2 +
+      state.pointer.x * 0.4 +
+      Math.sin(state.clock.elapsedTime * 0.3) * 0.12;
     mesh.current.rotation.y = THREE.MathUtils.damp(
       mesh.current.rotation.y,
       targetY,
       3,
       delta,
     );
+    mesh.current.rotation.z = THREE.MathUtils.damp(
+      mesh.current.rotation.z,
+      -0.12 + Math.max(0, (scroll - 0.65) / 0.35) * 0.62,
+      5,
+      delta,
+    );
     mesh.current.rotation.x = THREE.MathUtils.damp(
       mesh.current.rotation.x,
-      state.pointer.y * 0.18 +
-        (product ? 0 : Math.min(window.scrollY, 900) * 0.00012) +
-        0.3,
+      state.pointer.y * 0.18 + 0 + 0.3,
       3,
       delta,
     );
@@ -70,7 +85,7 @@ function Form({ color, product }: { color: string; product: boolean }) {
             </mesh>
           </>
         ) : (
-          <CoffeeModel color={color} />
+          <CoffeeModel color={color} progress={progress} />
         )}
       </group>
     </Float>
@@ -81,11 +96,13 @@ export default function SculptureCanvas({
   product = false,
   active = true,
   onFailure,
+  progress,
 }: {
   color?: string;
   product?: boolean;
   active?: boolean;
   onFailure: () => void;
+  progress?: React.RefObject<number>;
 }) {
   return (
     <Canvas
@@ -101,7 +118,7 @@ export default function SculptureCanvas({
     >
       <ambientLight intensity={0.35} />
       <directionalLight position={[3, 4, 5]} intensity={3} />
-      <Form color={color} product={product} />
+      <Form color={color} product={product} progress={progress} />
       <Environment resolution={128}>
         <Lightformer intensity={4} position={[0, 4, -2]} scale={[10, 3, 1]} />
         <Lightformer

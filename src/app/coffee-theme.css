@@ -1,0 +1,232 @@
+/* Cream paper, espresso ink, and tactile arcade controls. */
+.wordmark {
+  white-space: nowrap;
+}
+.wordmark-web {
+  font-size: 0.47em;
+  letter-spacing: -0.5px;
+  margin-left: 7px;
+  font-weight: 600;
+}
+.coffee-experience {
+  --cup-turn: 0deg;
+  --cup-tip: 0deg;
+  --drip-show: 0;
+  --drip-fall: 0px;
+}
+.fallback-drips {
+  opacity: 0;
+}
+.coffee-experience .fallback-turn {
+  transform-origin: 300px 300px;
+  transform: rotateY(var(--cup-turn)) rotate(var(--cup-tip));
+}
+.coffee-experience .fallback-drips {
+  opacity: var(--drip-show);
+  transform: translateY(var(--drip-fall));
+}
+:is(
+  .work-section,
+  .lab-section,
+  .services-section,
+  .studio-section,
+  .contact-section,
+  .case-page,
+  .legal-page,
+  .site-footer
+) {
+  --bg: #f0e5d3;
+  --fg: #36261d;
+  --muted: #71604e;
+  --accent: #784829;
+  --line: #c7b59c;
+  --orange: #95512d;
+  --mint: #375735;
+  color-scheme: light;
+  background-color: var(--bg);
+  color: var(--fg);
+}
+.discipline-strip {
+  background: #c49a6c;
+  color: #352519;
+}
+.discipline-strip svg {
+  color: #583820;
+}
+.lab-section {
+  background: #e5d3b8;
+  border-color: #c7b59c;
+}
+.studio-section {
+  background: #d2b38c;
+}
+.contact-section {
+  background-color: #f5ebdc;
+  background-image:
+    linear-gradient(#805c3510 1px, transparent 1px),
+    linear-gradient(90deg, #805c3510 1px, transparent 1px);
+}
+.site-footer {
+  background: #e3cfb1;
+  border-color: #b79b76;
+}
+.section .eyebrow,
+.studio-section .eyebrow,
+.studio-copy,
+.process-line p,
+.process-line > div > span,
+.lab-business-note,
+.form-submit > span {
+  color: #66503a;
+}
+.section .eyebrow > span {
+  color: #714425;
+  border-color: #b79977;
+  box-shadow: 2px 2px 0 #d6bfa3;
+}
+.project-window {
+  background: #dbc5a5;
+  border-color: #b99b79;
+  color: #563b28;
+}
+.project-window i {
+  background: #92704e;
+}
+.project-image {
+  border-color: #b99b79;
+  box-shadow: 7px 7px 0 #8c684222;
+}
+.project-open {
+  background: #f4e4ca;
+  color: #54341f;
+  box-shadow: 3px 3px 0 #8a6644;
+}
+.experience-lab {
+  border-color: #b79977;
+  box-shadow: 8px 8px 0 #b7997755;
+}
+.lab-tabs,
+.lab-tabs button {
+  border-color: #b79977;
+}
+.lab-tabs button {
+  background: #f1e3cd;
+  color: #624a34;
+}
+.lab-tabs button[aria-selected="true"] {
+  background: #74472d;
+  color: #fff3df;
+}
+.lab-tabs button[aria-selected="true"] > span {
+  color: #ecd4b8;
+}
+.lab-panel {
+  background-color: #f5ead8;
+  background-image: radial-gradient(#8a654528 1px, transparent 1px);
+}
+.lab-panel-copy .eyebrow,
+.lab-caption,
+.lab-panel-copy p {
+  color: #6c513a;
+}
+.material-options button {
+  border-color: #f5ead8;
+}
+.interactive-dashboard {
+  background: #e3cbaa;
+  border-color: #ab845d;
+  box-shadow: 7px 7px 0 #b4936c;
+}
+.mini-dash-top,
+.mini-dash-bottom,
+.mini-dash-bottom span,
+.interactive-dashboard p {
+  color: #61462e;
+}
+.period-controls > button {
+  border-color: #aa8158;
+}
+.period-controls > button[aria-pressed="true"] {
+  color: #fff3df;
+}
+.live-bars {
+  border-color: #b79977;
+}
+.reactive-field i {
+  box-shadow: 2px 2px 0 #b59370;
+}
+.services-list details,
+.services-list summary > span,
+.power-meter > div,
+.process-line,
+.process-line > div {
+  border-color: #bfa687;
+}
+.power-meter i:nth-last-child(-n + 3) {
+  background: #d6c3a9;
+}
+.studio-star {
+  color: #765034;
+}
+.studio-section:after {
+  background-image: repeating-conic-gradient(#805b37 0 25%, transparent 0 50%);
+}
+.service-body p {
+  color: #6e543e;
+}
+.contact-token {
+  border-color: #af8b64;
+}
+.contact-form input:not([type="checkbox"]),
+.contact-form select,
+.contact-form textarea {
+  border-color: #a88a6a;
+}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #796550;
+}
+.contact-form small,
+.form-status {
+  color: #92371f;
+}
+.contact-form input[aria-invalid="true"],
+.contact-form select[aria-invalid="true"],
+.contact-form textarea[aria-invalid="true"] {
+  border-color: #92371f;
+}
+.contact-section .pill-button.primary,
+.case-page .pill-button {
+  background: #75482e;
+  color: #fff3df;
+  border-color: #75482e;
+  box-shadow: 4px 4px 0 #c6a680;
+}
+.contact-section .pill-button.primary:hover,
+.case-page .pill-button:hover {
+  background: #55311e;
+}
+.next-project {
+  background: #e3cfb1;
+}
+.legal-page {
+  max-width: none;
+  padding-inline: max(6%, calc((100vw - 900px) / 2));
+}
+@media (min-width: 701px) and (max-width: 1150px) {
+  .header-descriptor {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .coffee-experience .fallback-turn {
+    transform: rotate(-12deg);
+  }
+  .coffee-experience .fallback-drips {
+    display: none;
+  }
+}
+
+.work-section .concept-note {
+  color: #71604e;
+}

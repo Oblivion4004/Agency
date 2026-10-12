@@ -29,7 +29,11 @@ export function SculptureFallback({ color = "#ff9669" }: { color?: string }) {
         </filter>
       </defs>
       <ellipse cx="304" cy="479" rx="137" ry="20" fill="#000" opacity=".2" />
-      <g transform="rotate(-12 300 300)" filter={`url(#${id}-shadow)`}>
+      <g
+        className="fallback-turn"
+        transform="rotate(-12 300 300)"
+        filter={`url(#${id}-shadow)`}
+      >
         <ellipse
           cx="296"
           cy="438"
@@ -82,6 +86,11 @@ export function SculptureFallback({ color = "#ff9669" }: { color?: string }) {
           opacity=".22"
           strokeLinecap="round"
         />
+      </g>
+      <g className="fallback-drips" fill="#b97c4c">
+        <ellipse cx="154" cy="290" rx="5" ry="11" />
+        <ellipse cx="148" cy="330" rx="4" ry="8" />
+        <ellipse cx="140" cy="372" rx="3" ry="7" />
       </g>
       <g
         fill="none"

@@ -32,9 +32,11 @@ class SceneBoundary extends Component<
 export function Sculpture({
   color,
   product = false,
+  progress,
 }: {
   color?: string;
   product?: boolean;
+  progress?: React.RefObject<number>;
 }) {
   const root = useRef<HTMLDivElement>(null);
   const [enabled, setEnabled] = useState(false);
@@ -95,6 +97,7 @@ export function Sculpture({
           <Canvas
             color={color}
             product={product}
+            progress={progress}
             active={visible}
             onFailure={() => setFailed(true)}
           />

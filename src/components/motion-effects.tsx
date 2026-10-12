@@ -28,17 +28,6 @@ export function MotionEffects() {
             clearProps: "all",
           });
         });
-      gsap.to(".hero-art", {
-        y: 30,
-        rotate: 3,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".hero",
-          start: "top top",
-          end: "bottom top",
-          scrub: 1,
-        },
-      });
     });
     const cleanups: (() => void)[] = [];
     if (

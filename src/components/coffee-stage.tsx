@@ -1,5 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Sculpture } from "./sculpture";
 const finishes = [
   { name: "Peach", color: "#ff9669" },
@@ -7,9 +9,56 @@ const finishes = [
   { name: "Mint", color: "#b8ddaf" },
 ];
 export function CoffeeStage() {
+  const stage = useRef<HTMLDivElement>(null);
+  const progress = useRef(0);
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const media = gsap.matchMedia();
+    media.add(
+      {
+        desktop: "(min-width: 701px)",
+        motion: "(prefers-reduced-motion: no-preference)",
+      },
+      (context) => {
+        if (!context.conditions?.motion || !stage.current) return;
+        const desktop = context.conditions.desktop;
+        const timeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: desktop ? ".arcade-hero-grid" : stage.current,
+            start: desktop ? "top top" : "top 55%",
+            end: desktop ? "+=600" : "bottom 25%",
+            pin: desktop ? ".arcade-hero-grid" : false,
+            scrub: 0.6,
+            invalidateOnRefresh: true,
+          },
+        });
+        timeline.to(progress, { current: 1, duration: 1, ease: "none" }, 0);
+        timeline.to(
+          stage.current,
+          { "--cup-turn": "360deg", duration: 0.65, ease: "none" },
+          0,
+        );
+        timeline.to(
+          stage.current,
+          {
+            "--cup-tip": "-28deg",
+            "--drip-show": 1,
+            "--drip-fall": "65px",
+            duration: 0.35,
+            ease: "none",
+          },
+          0.65,
+        );
+        return () => {
+          progress.current = 0;
+        };
+      },
+    );
+    return () => media.revert();
+  }, []);
   const [finish, setFinish] = useState(0);
   return (
-    <div className="coffee-experience">
+    <div ref={stage} className="coffee-experience">
       <div className="coffee-orbit" aria-hidden="true" />
       <span className="arcade-spark spark-one" aria-hidden="true">
         ✦
@@ -24,7 +73,7 @@ export function CoffeeStage() {
         <span>✳</span>
       </div>
       <div className="hero-art">
-        <Sculpture color={finishes[finish].color} />
+        <Sculpture color={finishes[finish].color} progress={progress} />
       </div>
       <div className="coffee-controls">
         <span>CHOOSE YOUR CUP</span>
@@ -45,7 +94,9 @@ export function CoffeeStage() {
           {finishes[finish].name}
         </span>
       </div>
-      <span className="coffee-coordinate">GOOD COFFEE. BETTER WEBSITES.</span>
+      <span className="coffee-coordinate">
+        SCROLL TO SPIN. KEEP GOING TO POUR.
+      </span>
     </div>
   );
 }
