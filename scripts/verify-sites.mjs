@@ -7,9 +7,9 @@ const { default: worker } = await import(
 for (const route of [
   "/",
   "/privacy",
-  "/work/aura-audio",
-  "/work/monument-architecture",
-  "/work/orbit-finance",
+  "/work/daybreak-coffee",
+  "/work/goodform-salon",
+  "/work/homebase-services",
 ]) {
   const response = await worker.fetch(
     new Request("https://studio.example.com" + route),

@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight, Plus } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Plus, Gamepad2, Check } from "lucide-react";
 import { projects } from "@/lib/projects";
 import { ProjectVisual } from "@/components/project-visual";
-import { Sculpture } from "@/components/sculpture";
+import { CoffeeStage } from "@/components/coffee-stage";
 import { MotionEffects } from "@/components/motion-effects";
 import { ExperienceLab } from "@/components/experience-lab";
 import { ContactForm } from "@/components/contact-form";
@@ -10,78 +10,95 @@ export default function Home() {
   return (
     <main id="main">
       <MotionEffects />
-      <section className="hero" aria-labelledby="hero-title">
+      <section className="hero arcade-hero" aria-labelledby="hero-title">
         <div className="hero-topline">
           <span>
-            <i className="status-dot" /> OPEN TO NEW POSSIBILITIES
+            <i className="status-dot" /> PLAYER 01 — ATHARVA
           </span>
-          <span>DESIGN-LED. FUTURE-FOCUSED.</span>
-        </div>
-        <div className="hero-headline">
-          <h1 id="hero-title">
-            Digital experiences,
-            <br />
-            <span className="hero-last">
-              beyond <em>ordinary.</em>
-              <span className="headline-star">✳</span>
+          <span>
+            INDEPENDENT DESIGNER & DEVELOPER{" "}
+            <span className="pixel-heart" aria-hidden="true">
+              ♥
             </span>
-          </h1>
+          </span>
         </div>
-        <div className="hero-art">
-          <Sculpture />
-        </div>
-        <div className="hero-bottom">
-          <div>
-            <p>
-              We turn ambitious ideas into
-              <br />
-              websites you don’t just see.
-              <br />
-              <strong>You feel.</strong>
+        <div className="arcade-hero-grid">
+          <div className="hero-copy">
+            <p className="hero-kicker">
+              <Gamepad2 size={16} /> A NEW LEVEL FOR YOUR BUSINESS
             </p>
-            <Link className="pill-button primary" href="#work">
-              Explore our work <ArrowUpRight size={18} />
-            </Link>
+            <div className="hero-headline">
+              <h1 id="hero-title">
+                Small business.
+                <br />
+                Big website
+                <br />
+                <em>energy.</em>
+                <span className="pixel-burst" aria-hidden="true">
+                  ✦
+                </span>
+              </h1>
+            </div>
+            <p className="hero-description">
+              I build premium websites for cafés, shops, salons, and service
+              businesses. Simple to use. Hard to forget.
+            </p>
+            <div className="hero-actions">
+              <Link className="pill-button primary" href="#contact">
+                Level up my website <ArrowUpRight size={18} />
+              </Link>
+              <Link className="hero-secondary" href="#work">
+                See the possibilities <ArrowDown size={14} />
+              </Link>
+            </div>
+            <div className="hero-benefits">
+              <span>
+                <Check size={12} /> Made for your business
+              </span>
+              <span>
+                <Check size={12} /> Built to work beautifully
+              </span>
+            </div>
           </div>
-          <div className="hero-coordinate">
-            <span>FORM / FUNCTION / FEELING</span>
-            <span>EXPERIMENT 001 — DIGITAL MATTER</span>
-          </div>
-          <a className="scroll-cue" href="#work">
-            <span>SCROLL TO EXPLORE</span>
-            <ArrowDown size={18} />
+          <CoffeeStage />
+        </div>
+        <div className="hero-gamebar">
+          <span>
+            <i /> CURRENT QUEST: MAKE YOUR BUSINESS STAND OUT
+          </span>
+          <a href="#work">
+            SCROLL TO PLAY <ArrowDown size={13} />
           </a>
         </div>
       </section>
       <div className="discipline-strip">
-        <span>CREATIVE DEVELOPMENT</span>
+        <span>LOCAL BUSINESS</span>
         <Plus />
-        <span>IMMERSIVE EXPERIENCES</span>
+        <span>PREMIUM WEBSITES</span>
         <Plus />
-        <span>DIGITAL DESIGN</span>
+        <span>PERSONALITY INCLUDED</span>
         <Plus />
-        <span>BUILT WITH INTENTION</span>
+        <span>NO BORING BITS</span>
         <Plus />
       </div>
       <section id="work" className="section work-section">
         <div className="section-heading">
           <div>
             <p className="eyebrow">
-              <span>01 /</span> SELECTED EXPLORATIONS
+              <span>LEVEL 01</span> THE POSSIBILITIES
             </p>
             <h2>
-              Good design gets noticed.
+              Everyday businesses.
               <br />
-              <span className="muted">Great experiences stay.</span>
+              <span className="muted">Anything but ordinary.</span>
             </h2>
           </div>
           <p className="section-aside">
-            A glimpse of what’s possible.
+            Your neighbourhood favourites,
             <br />
-            Original concepts. Real craft.
-            <br />
+            reimagined for the web.
             <span className="concept-note">
-              Self-initiated work · Not client commissions
+              Original concept work · Not client commissions
             </span>
           </p>
         </div>
@@ -92,6 +109,17 @@ export default function Home() {
               key={p.slug}
               href={`/work/${p.slug}`}
             >
+              <div className="project-window">
+                <span>
+                  <i />
+                  <i />
+                  <i />
+                </span>
+                <span>
+                  {p.category.split(" / ")[0].toUpperCase()} / CONCEPT
+                </span>
+                <ArrowUpRight size={14} />
+              </div>
               <div className="project-image">
                 <ProjectVisual type={p.type} />
                 <span className="project-open">
@@ -105,7 +133,7 @@ export default function Home() {
                   <span>{p.category}</span>
                 </h3>
                 <span>
-                  {p.year} <ArrowUpRight size={19} />
+                  0{i + 1} <ArrowUpRight size={19} />
                 </span>
               </div>
             </Link>
@@ -116,59 +144,72 @@ export default function Home() {
         <div className="section-heading">
           <div>
             <p className="eyebrow">
-              <span>02 /</span> THE EXPERIENCE LAB
+              <span>BONUS LEVEL</span> THE PLAYGROUND
             </p>
             <h2>
-              Less expected.
+              A little play.
               <br />
-              <span className="muted">More experienced.</span>
+              <span className="muted">A lot of possibility.</span>
             </h2>
           </div>
           <p className="section-aside">
-            A playground for the possibilities
+            Explore the details that make a website
             <br />
-            between design and technology.
+            feel like your business. Pick a colour.
             <br />
-            Go on. Get curious.
+            Press a button. See what happens.
           </p>
         </div>
         <ExperienceLab />
+        <p className="lab-business-note">
+          <span>✳</span> Your website can be as simple or as expressive as your
+          business needs.
+        </p>
       </section>
       <section id="services" className="section services-section">
         <div>
           <p className="eyebrow">
-            <span>03 /</span> WHAT WE BRING
+            <span>LEVEL 02</span> YOUR POWER-UPS
           </p>
           <h2>
-            Made to move
+            Good looks.
             <br />
-            <span className="muted">your business.</span>
+            <span className="muted">Real-world purpose.</span>
           </h2>
           <p className="services-intro">
-            Beautiful is the beginning.
+            Help people find you, understand what
             <br />
-            Useful is what makes it matter.
+            you offer, and take the next step.
           </p>
+          <div className="power-meter" aria-hidden="true">
+            <span>BUSINESS POTENTIAL</span>
+            <div>
+              {Array.from({ length: 10 }, (_, i) => (
+                <i key={i} />
+              ))}
+            </div>
+            <span>LET’S UNLOCK IT ↗</span>
+          </div>
         </div>
         <div className="services-list">
           {[
             [
               "01",
-              "Websites with a point of view",
-              "A distinctive digital presence that tells your story clearly and turns interest into meaningful inquiries.",
-              "Strategy & positioning / UI & UX / Custom development",
+              "A website that feels like you",
+              "Give your café, salon, shop, or service business a distinctive home online. Clear information, thoughtful design, and a great experience on every phone.",
+              "Custom design / Mobile-ready pages / Search-friendly structure",
             ],
             [
               "02",
-              "Experiences that invite interaction",
-              "Bring a product, space, or idea to life. Give your audience a reason to explore—and a clearer understanding of what makes you different.",
-              "Interactive 3D / Product visualization / Creative development",
+              "Fewer steps. More ways to connect.",
+              "Make it easy to view your menu, explore your services, request a quote, or book an appointment. The right features, built around how your business actually works.",
+              "Menus & catalogs / Booking integrations / Inquiry forms",
             ],
             [
               "03",
-              "Digital products that feel effortless",
-              "Make complex workflows clear, help people find their next step, and build interfaces that grow with your business.",
-              "Product design / Commerce / Systems & integrations",
+              "That extra bit of “wow”",
+              "A playful product view, an unexpected transition, or a detail worth remembering. Add personality where it helps your story and keeps the next step clear.",
+              "Product experiences / Thoughtful animation / Interactive details",
             ],
           ].map(([n, title, body, detail]) => (
             <details key={n} open={n === "01"}>
@@ -187,37 +228,39 @@ export default function Home() {
       </section>
       <section id="studio" className="section studio-section">
         <p className="eyebrow">
-          <span>04 /</span> THE STUDIO
+          <span>PLAYER PROFILE</span> MEET YOUR DESIGNER
         </p>
         <div className="studio-statement">
-          <span className="studio-star">✳</span>
+          <span className="studio-star" aria-hidden="true">
+            ✳
+          </span>
           <h2>
-            Small by choice.
+            Hi, I’m Atharva.
             <br />
-            Ambitious by nature.
+            Your business’s next teammate.
           </h2>
         </div>
         <div className="studio-copy">
           <p>
-            ATRIXX is an independent creative development studio founded by
-            Atharva. A place where thoughtful design meets a restless curiosity
-            for what the web can be.
+            I’m the designer and developer behind ATRIXX. I believe a great
+            local business deserves a website with just as much care, character,
+            and ambition as the people running it.
           </p>
           <p>
-            We connect the big picture to the smallest interaction. From the
-            first conversation to the final line of code, the intention stays
-            the same: make something worth experiencing.
+            You bring the business. I bring the design, the code, and a playful
+            point of view. We’ll turn what makes you special into something your
+            customers can see—and use.
           </p>
         </div>
         <div className="process-line">
           {[
-            ["01", "Discover", "Find the right problem."],
-            ["02", "Design", "Give the idea a point of view."],
-            ["03", "Develop", "Make every detail work."],
-            ["04", "Refine", "Test, tune, and launch."],
+            ["01", "Say hello", "Tell me about your business."],
+            ["02", "Find your style", "Shape the look and the journey."],
+            ["03", "Build it right", "Bring the details to life."],
+            ["04", "Go live", "Test, polish, and press start."],
           ].map(([n, t, d]) => (
             <div key={n}>
-              <span>{n} /</span>
+              <span>STAGE {n}</span>
               <h3>{t}</h3>
               <p>{d}</p>
             </div>
@@ -226,22 +269,29 @@ export default function Home() {
       </section>
       <section id="contact" className="section contact-section">
         <p className="eyebrow">
-          <span>05 /</span> SOMETHING GOOD STARTS HERE
+          <span>READY, PLAYER ONE?</span> LET’S BUILD YOUR NEXT LEVEL
         </p>
         <h2>
-          Have a bold idea?
+          Your business.
           <br />
-          <span>Let’s give it form.</span>
+          <span>A fresh start online.</span>
           <ArrowUpRight className="contact-arrow" />
         </h2>
         <div className="contact-layout">
-          <p>
-            A new beginning. A better website.
-            <br />
-            Something no one’s done before.
-            <br />
-            <strong>We’d love to hear it.</strong>
-          </p>
+          <div className="contact-intro">
+            <p>
+              A café around the corner.
+              <br />A shop with a story.
+              <br />A service people should know about.
+              <br />
+              <strong>Let’s make your website work for you.</strong>
+            </p>
+            <span className="contact-token">
+              <Gamepad2 size={22} /> START A CONVERSATION
+              <br />
+              NO TECH TALK REQUIRED
+            </span>
+          </div>
           <ContactForm />
         </div>
       </section>

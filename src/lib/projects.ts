@@ -1,52 +1,54 @@
 export const projects = [
   {
-    slug: "aura-audio",
-    name: "AURA",
-    category: "E-commerce / 3D experience",
+    slug: "daybreak-coffee",
+    name: "DAYBREAK",
+    category: "Coffee shop / Menu & discovery",
     year: "2026",
-    type: "audio",
-    title: "Sound. In a different dimension.",
+    type: "coffee",
+    title: "Your daily ritual. A little brighter.",
     description:
-      "An immersive product story for an imagined high-fidelity audio brand.",
+      "A warm, playful website concept for an imagined neighbourhood coffee shop.",
     brief:
-      "Make the craft of a premium speaker tangible before a customer ever hears it.",
+      "Help a first-time visitor feel the atmosphere, browse the menu, and find the café without hunting for information.",
     response:
-      "A sculptural product stage, material exploration, and a focused path from discovery to purchase.",
+      "A characterful coffee identity, an easy-to-scan menu, and prominent opening hours and directions. Playful visuals introduce the feeling of the space.",
     value:
-      "Designed to answer product questions through visual exploration and make purchase decisions feel considered.",
-    color: "sage",
+      "Designed to turn online curiosity into a clearer plan to visit, with the everyday details close at hand.",
+    color: "peach",
   },
   {
-    slug: "monument-architecture",
-    name: "MONUMENT",
-    category: "Brand platform / Web design",
+    slug: "goodform-salon",
+    name: "GOODFORM",
+    category: "Salon / Services & appointments",
     year: "2026",
-    type: "architecture",
-    title: "Space to see things differently.",
+    type: "salon",
+    title: "Good hair. Great first impressions.",
     description:
-      "An editorial digital home for a fictional architecture practice.",
-    brief: "Give spatial design the quiet, generous presentation it deserves.",
+      "A confident digital identity for a fictional independent hair salon.",
+    brief:
+      "Make it easy to understand the salon’s style, compare services, and take the next step toward an appointment.",
     response:
-      "Architectural compositions, restrained navigation, and a project narrative that puts the work first.",
+      "Bold editorial typography, a focused service menu, and a clear booking entry point. A friendly personality runs through every small detail.",
     value:
-      "Designed to help prospective clients understand a practice’s point of view and start a relevant conversation.",
-    color: "sand",
+      "Designed to help new customers find the right service and reduce the friction between browsing and booking.",
+    color: "lilac",
   },
   {
-    slug: "orbit-finance",
-    name: "ORBIT",
-    category: "Digital product / Interface design",
+    slug: "homebase-services",
+    name: "HOMEBASE",
+    category: "Local services / Quote inquiries",
     year: "2026",
-    type: "interface",
-    title: "Complexity, brought into focus.",
+    type: "services",
+    title: "A good home for a local business.",
     description:
-      "An experimental interface for an imagined personal finance product.",
-    brief: "Turn dense information into a calm and useful daily overview.",
+      "An approachable website concept for an imagined home maintenance business.",
+    brief:
+      "Explain what the business does, where it works, and how to request help—especially on a phone.",
     response:
-      "A clear information hierarchy, responsive charts, and small moments of motion that explain state changes.",
+      "Straightforward service descriptions, visible service areas, and a short quote inquiry flow. Warm design makes practical information easy to approach.",
     value:
-      "Designed to make essential information easier to scan and common actions easier to discover.",
-    color: "lavender",
+      "Designed to help homeowners identify the right service and send a more useful inquiry with less back-and-forth.",
+    color: "mint",
   },
 ] as const;
 export type Project = (typeof projects)[number];

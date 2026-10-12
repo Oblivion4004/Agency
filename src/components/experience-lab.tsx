@@ -3,7 +3,11 @@ import { useState, useRef } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight, RotateCcw, MoveUpRight } from "lucide-react";
 import { Sculpture } from "./sculpture";
-const tabs = ["Material study", "Interface in motion", "Reactive field"];
+const tabs = [
+  "Product playground",
+  "Useful little details",
+  "Pixel playground",
+];
 export function ExperienceLab() {
   const [tab, setTab] = useState(0);
   const [material, setMaterial] = useState(0);
@@ -56,20 +60,20 @@ export function ExperienceLab() {
         {tab === 0 ? (
           <>
             <div className="lab-panel-copy">
-              <span className="eyebrow">OBJECT 001 / MATERIAL EXPLORATION</span>
+              <span className="eyebrow">POWER-UP 001 / PRODUCT DISCOVERY</span>
               <h3>
-                A new perspective.
-                <br />
-                At every angle.
+                A closer look.
+                <br />A better impression.
               </h3>
               <p>
                 Move your cursor. Change the finish.
-                <br />A small study in digital tangibility.
+                <br />
+                Let customers explore what makes your product special.
               </p>
               <div
                 className="material-options"
                 role="group"
-                aria-label="Sculpture material"
+                aria-label="Product finish"
               >
                 {["Sage chrome", "Warm brass", "Cool silver"].map((name, i) => (
                   <button
@@ -99,19 +103,17 @@ export function ExperienceLab() {
               <Sculpture color={colors[material]} product />
             </div>
             <span className="lab-caption">
-              LIVE 3D ON SUPPORTED DESKTOPS · STATIC STUDY ON MOBILE
+              TRY A FINISH · INTERACTIVE PRODUCT CONCEPT
             </span>
           </>
         ) : tab === 1 ? (
           <>
             <div className="lab-panel-copy">
-              <span className="eyebrow">
-                INTERFACE 002 / STATE & TRANSITION
-              </span>
+              <span className="eyebrow">POWER-UP 002 / CLEAR INFORMATION</span>
               <h3>
-                Clarity,
+                Useful can be
                 <br />
-                in every interaction.
+                delightful, too.
               </h3>
               <p>
                 Switch the time frame to see how
@@ -178,7 +180,9 @@ export function ExperienceLab() {
         ) : (
           <>
             <div className="lab-panel-copy">
-              <span className="eyebrow">EXPERIMENT 003 / PLAY & RESPONSE</span>
+              <span className="eyebrow">
+                POWER-UP 003 / A LITTLE PERSONALITY
+              </span>
               <h3>
                 A little input.
                 <br />A different outcome.

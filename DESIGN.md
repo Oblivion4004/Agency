@@ -28,3 +28,7 @@ Transform/opacity animation only; no scroll hijacking. GSAP scoped contexts; Mot
 ## Content integrity
 
 ATRIXX is the user-approved studio name, inspired by Atharva. All showcased projects are original, explicitly labeled concept work. No client relationships, endorsements, awards, or measured results are claimed. Contact delivery requires owner-provided email credentials and spam-protection configuration.
+
+## Arcade edition — 13 October 2026
+
+User-requested change: replace the abstract hero sculpture with coffee and make the whole site more arcade-inspired, clearly positioning premium websites for everyday businesses. Hero: smiling ceramic coffee cup, latte art, matching SVG fallback, keyboard-accessible peach/lilac/mint controls. Visual system: ink, lavender, peach, and mint; tactile offset-shadow buttons, monospaced labels, pixel details, checker motifs, and browser-window project frames. Messaging: direct first-person introduction to Atharva, practical menus/booking/inquiry use cases. Portfolio concepts now cover a café, salon, and local home services. No client work or results are claimed. Keep existing motion preferences, accessibility, lazy loading, and contact safeguards.

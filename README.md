@@ -1,6 +1,6 @@
 # ATRIXX — independent digital studio
 
-A custom Next.js / TypeScript portfolio built for Atharva. The visual direction and information architecture are documented in [DESIGN.md](./DESIGN.md).
+A custom Next.js / TypeScript portfolio built for Atharva. The arcade edition pairs an interactive coffee cup with direct messaging about premium websites for everyday businesses. The visual direction and information architecture are documented in [DESIGN.md](./DESIGN.md).
 
 ## Run
 
@@ -30,7 +30,7 @@ Sites access is private by default. The display name is ATRIXX; the hosting slug
 
 ## Content and accessibility
 
-All three project studies are original, explicitly labeled concepts. Replace entries in `src/lib/projects.ts` with approved work when available. No clients, testimonials, business results, or awards are invented. The illustrations are CSS artwork, and the sculpture/product studies are procedural Three.js objects.
+All three project studies—Daybreak café, Goodform salon, and Homebase local services—are original, explicitly labeled concepts. Replace entries in `src/lib/projects.ts` with approved work when available. No clients, testimonials, business results, or awards are invented. The illustrations are CSS/SVG artwork, and the coffee cup/product studies are procedural Three.js objects. The hero's peach, lilac, and mint controls update both the live cup and the static SVG fallback.
 
 Three.js loads only on supported desktop devices. Small screens, reduced-motion preferences, and save-data mode get static artwork. Offscreen canvases stop rendering. GSAP handles scroll reveals without taking over scrolling; Motion handles state transitions. Controls support keyboard use, visible focus, and touch interaction. Mobile navigation traps focus and makes page content inert while open.
 

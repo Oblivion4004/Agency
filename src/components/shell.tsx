@@ -56,7 +56,9 @@ export function Header() {
       <Link href="/" className="wordmark" aria-label="Atrixx home">
         atrixx<span className="wordmark-star">✳</span>
       </Link>
-      <span className="header-descriptor">INDEPENDENT DIGITAL STUDIO</span>
+      <span className="header-descriptor">
+        PREMIUM WEBSITES. EXTRA PERSONALITY.
+      </span>
       <button
         ref={toggle}
         className="menu-toggle"
@@ -75,8 +77,8 @@ export function Header() {
       >
         {[
           ["Work", "/#work"],
-          ["Studio", "/#studio"],
-          ["Lab", "/#lab"],
+          ["About", "/#studio"],
+          ["Playground", "/#lab"],
         ].map(([label, href]) => (
           <Link key={label} href={href} onClick={() => setOpen(false)}>
             {label}
@@ -87,7 +89,7 @@ export function Header() {
           className="header-contact"
           onClick={() => setOpen(false)}
         >
-          Let’s talk <ArrowUpRight size={16} />
+          Start a project <ArrowUpRight size={16} />
         </Link>
       </nav>
     </header>
@@ -99,7 +101,7 @@ export function Footer() {
       <Link className="wordmark" href="/">
         atrixx<span className="wordmark-star">✳</span>
       </Link>
-      <span>Independent minds. Extraordinary possibilities.</span>
+      <span>Made by Atharva. Powered by curiosity & coffee.</span>
       <div>
         <span>© {new Date().getFullYear()} ATRIXX</span>
         <Link href="/privacy">Privacy</Link>

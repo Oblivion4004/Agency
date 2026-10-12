@@ -169,7 +169,7 @@ export function ContactForm() {
       </div>
       <div className="form-row">
         <label>
-          What are you thinking? <span>*</span>
+          What does your business need? <span>*</span>
           <select
             name="service"
             defaultValue=""
@@ -206,7 +206,7 @@ export function ContactForm() {
           rows={3}
           minLength={20}
           maxLength={4000}
-          placeholder="The vision, the challenge, the what-if…"
+          placeholder="Your business, your customers, and what your website should help them do…"
           required
           {...invalid("message")}
         />
@@ -248,10 +248,10 @@ export function ContactForm() {
             ? "Sending your idea…"
             : state === "success"
               ? "Send another inquiry"
-              : "Let’s make it happen"}
+              : "Let’s level up"}
           <ArrowUpRight size={18} />
         </button>
-        <span>GOOD THINGS START WITH A CONVERSATION.</span>
+        <span>YOUR NEXT LEVEL STARTS HERE.</span>
       </div>
       <div
         ref={status}

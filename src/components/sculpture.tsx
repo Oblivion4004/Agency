@@ -18,7 +18,7 @@ const Canvas = dynamic(() => import("./sculpture-canvas"), {
   loading: () => <SculptureFallback />,
 });
 class SceneBoundary extends Component<
-  { children: React.ReactNode },
+  { children: React.ReactNode; fallback: React.ReactNode },
   { failed: boolean }
 > {
   state = { failed: false };
@@ -26,7 +26,7 @@ class SceneBoundary extends Component<
     return { failed: true };
   }
   render() {
-    return this.state.failed ? <SculptureFallback /> : this.props.children;
+    return this.state.failed ? this.props.fallback : this.props.children;
   }
 }
 export function Sculpture({
@@ -40,6 +40,7 @@ export function Sculpture({
   const [enabled, setEnabled] = useState(false);
   const [visible, setVisible] = useState(false);
   const [failed, setFailed] = useState(false);
+  const supported = useRef<boolean | undefined>(undefined);
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     const small = window.matchMedia("(max-width: 700px)");
@@ -51,6 +52,10 @@ export function Sculpture({
         setEnabled(false);
         return;
       }
+      if (supported.current !== undefined) {
+        setEnabled(supported.current);
+        return;
+      }
       let webgl = false;
       try {
         const canvas = document.createElement("canvas");
@@ -58,6 +63,7 @@ export function Sculpture({
         webgl = !!ctx;
         ctx?.getExtension("WEBGL_lose_context")?.loseContext();
       } catch {}
+      supported.current = webgl;
       setEnabled(webgl);
     };
     let timer: ReturnType<typeof setTimeout>;
@@ -81,7 +87,11 @@ export function Sculpture({
   return (
     <div ref={root} className="sculpture-stage" aria-hidden="true">
       {enabled && !failed ? (
-        <SceneBoundary>
+        <SceneBoundary
+          fallback={
+            product ? <ProductFallback /> : <SculptureFallback color={color} />
+          }
+        >
           <Canvas
             color={color}
             product={product}
@@ -92,7 +102,7 @@ export function Sculpture({
       ) : product ? (
         <ProductFallback />
       ) : (
-        <SculptureFallback />
+        <SculptureFallback color={color} />
       )}
     </div>
   );

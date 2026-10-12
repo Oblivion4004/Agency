@@ -1,4 +1,5 @@
 import type { Project } from "@/lib/projects";
+import { SculptureFallback } from "./sculpture-fallback";
 export function ProjectVisual({
   type,
   large = false,
@@ -11,71 +12,79 @@ export function ProjectVisual({
       className={`project-art ${type} ${large ? "large" : ""}`}
       aria-hidden="true"
     >
-      {type === "audio" ? (
-        <>
-          <span className="art-brand">aura®</span>
-          <span className="art-caption">FEEL EVERY FREQUENCY.</span>
-          <div className="speaker">
-            <div className="speaker-top" />
-            <div className="speaker-body" />
-            <span className="speaker-led" />
-          </div>
-          <span className="art-bottom">Sound, thoughtfully shaped.</span>
-          <span className="art-number">A—01</span>
-        </>
-      ) : type === "architecture" ? (
+      {type === "coffee" ? (
         <>
           <span className="art-brand">
-            MONUMENT<span className="brand-dot">®</span>
+            daybreak<span>COFFEE & GOOD COMPANY</span>
           </span>
-          <div className="building">
-            <div className="building-main" />
-            <div className="building-side" />
-            <div className="building-cut" />
-            <div className="building-stair" />
+          <span className="coffee-art-sun">✳</span>
+          <div className="project-coffee">
+            <SculptureFallback color="#fff0cf" />
           </div>
-          <span className="architecture-copy">
-            Built for
+          <span className="coffee-art-copy">
+            A GOOD DAY
             <br />
-            <em>what’s next.</em>
+            STARTS HERE.
           </span>
-          <span className="art-bottom">
-            SPACES WITH INTENTION — CONCEPT STUDY
+          <span className="art-bottom">YOUR NEIGHBOURHOOD PICK-ME-UP ↗</span>
+        </>
+      ) : type === "salon" ? (
+        <>
+          <span className="art-brand">
+            GOODFORM<span>HAIR WITH PERSONALITY.</span>
           </span>
+          <div className="salon-mirror">
+            <div className="salon-wave" />
+            <div className="salon-wave second" />
+            <span>
+              G<span>f</span>
+            </span>
+          </div>
+          <div className="salon-comb" />
+          <span className="salon-copy">
+            Look good.
+            <br />
+            <em>Feel like you.</em>
+          </span>
+          <span className="art-bottom">CUT / COLOUR / A LITTLE CONFIDENCE</span>
         </>
       ) : (
         <>
           <span className="art-brand">
-            orbit<span className="brand-dot">✳</span>
+            homebase<span>GOOD PEOPLE. PROPER WORK.</span>
           </span>
-          <div className="dashboard">
-            <div className="dash-sidebar">
-              ◉<br />
-              <br />⌘<br />↗<br />◷
+          <div className="service-browser">
+            <div className="service-browser-nav">
+              <span>homebase.</span>
+              <span>Let’s fix it ↗</span>
             </div>
-            <div className="dash-main">
-              <span className="dash-label">Your financial overview</span>
-              <h3>A little more clarity.</h3>
-              <div className="balance">
-                <span>Total balance</span>
-                <strong>
-                  ₹84,250<span>.00</span>
-                </strong>
+            <div className="service-browser-body">
+              <div>
+                <span className="tiny-label">YOUR LOCAL HELPING HAND</span>
+                <h3>
+                  Home feels
+                  <br />
+                  better here.
+                </h3>
+                <p>Little fixes. Big peace of mind.</p>
+                <span className="mock-button">Find your service ↗</span>
               </div>
-              <div className="chart">
-                {[25, 40, 34, 58, 48, 70, 60, 82, 74, 100, 90, 114].map(
-                  (height, i) => (
-                    <i key={i} style={{ height }} />
-                  ),
-                )}
+              <div className="mini-house">
+                <div className="house-roof" />
+                <div className="house-wall" />
+                <div className="house-window" />
+                <div className="house-door" />
+                <div className="house-tree" />
               </div>
-              <div className="dash-foot">
-                <span>Overview</span>
-                <span>Illustrative data ↗</span>
-              </div>
+            </div>
+            <div className="service-browser-footer">
+              <span>Repairs + Maintenance + Care</span>
+              <span>CONCEPT DESIGN</span>
             </div>
           </div>
-          <span className="art-bottom">A CLEARER PICTURE.</span>
+          <span className="art-bottom">
+            A BETTER FIRST IMPRESSION, BUILT IN.
+          </span>
         </>
       )}
     </div>

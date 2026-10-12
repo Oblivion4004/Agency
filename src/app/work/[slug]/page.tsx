@@ -29,12 +29,12 @@ export default async function ProjectPage({
     <main id="main" className="case-page">
       <section className="section case-intro">
         <Link href="/#work" className="text-link">
-          <ArrowLeft size={16} /> Back to explorations
+          <ArrowLeft size={16} /> Back to possibilities
         </Link>
         <p className="eyebrow">SELF-INITIATED CONCEPT / {p.year}</p>
         <h1>
           {p.name}
-          <span>®</span>
+          <span aria-hidden="true">✳</span>
         </h1>
         <div className="case-heading">
           <h2>{p.title}</h2>
@@ -66,7 +66,7 @@ export default async function ProjectPage({
         </p>
       </section>
       <section className="section next-project">
-        <p className="eyebrow">NEXT EXPLORATION</p>
+        <p className="eyebrow">NEXT POSSIBILITY</p>
         <Link href={`/work/${next.slug}`}>
           {next.name}
           <ArrowUpRight />

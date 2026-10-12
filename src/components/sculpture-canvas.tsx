@@ -3,11 +3,13 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, Lightformer, Float } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
+import { CoffeeModel } from "./coffee-model";
 function Form({ color, product }: { color: string; product: boolean }) {
   const mesh = useRef<THREE.Group>(null);
   useFrame((state, delta) => {
     if (!mesh.current) return;
-    const targetY = state.pointer.x * 0.45 + state.clock.elapsedTime * 0.055;
+    const targetY =
+      state.pointer.x * 0.4 + Math.sin(state.clock.elapsedTime * 0.3) * 0.12;
     mesh.current.rotation.y = THREE.MathUtils.damp(
       mesh.current.rotation.y,
       targetY,
@@ -16,14 +18,16 @@ function Form({ color, product }: { color: string; product: boolean }) {
     );
     mesh.current.rotation.x = THREE.MathUtils.damp(
       mesh.current.rotation.x,
-      state.pointer.y * 0.25 + (product ? 0 : window.scrollY * 0.0004) + 0.35,
+      state.pointer.y * 0.18 +
+        (product ? 0 : Math.min(window.scrollY, 900) * 0.00012) +
+        0.3,
       3,
       delta,
     );
   });
   return (
     <Float speed={1.4} rotationIntensity={0.12} floatIntensity={0.25}>
-      <group ref={mesh} rotation={[0.35, 0, product ? -0.2 : 0.4]}>
+      <group ref={mesh} rotation={[0.3, 0, product ? -0.2 : -0.12]}>
         {product ? (
           <>
             <mesh>
@@ -66,21 +70,14 @@ function Form({ color, product }: { color: string; product: boolean }) {
             </mesh>
           </>
         ) : (
-          <mesh>
-            <torusKnotGeometry args={[1.25, 0.42, 160, 32, 2, 3]} />
-            <meshStandardMaterial
-              color={color}
-              metalness={0.96}
-              roughness={0.22}
-            />
-          </mesh>
+          <CoffeeModel color={color} />
         )}
       </group>
     </Float>
   );
 }
 export default function SculptureCanvas({
-  color = "#adb997",
+  color = "#ff9669",
   product = false,
   active = true,
   onFailure,

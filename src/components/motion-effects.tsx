@@ -29,8 +29,8 @@ export function MotionEffects() {
           });
         });
       gsap.to(".hero-art", {
-        y: 70,
-        rotate: 7,
+        y: 30,
+        rotate: 3,
         ease: "none",
         scrollTrigger: {
           trigger: ".hero",
