@@ -4,18 +4,10 @@ export const services = [
   "Digital product",
   "Something else",
 ];
-export const budgets = [
-  "Let’s discuss",
-  "Under ₹1 lakh",
-  "₹1–3 lakh",
-  "₹3–7 lakh",
-  "₹7 lakh+",
-];
 export type Inquiry = {
   name: string;
   email: string;
   service: string;
-  budget: string;
   message: string;
   consent: boolean;
   website: string;
@@ -35,7 +27,6 @@ export function validateInquiry(value: unknown): {
     name: str("name"),
     email: str("email"),
     service: str("service"),
-    budget: str("budget"),
     message: str("message"),
     consent: raw.consent === true,
     website: str("website"),
@@ -51,8 +42,6 @@ export function validateInquiry(value: unknown): {
     errors.email = "Please enter a valid email address.";
   if (!services.includes(data.service))
     errors.service = "Choose a project type.";
-  if (!budgets.includes(data.budget))
-    errors.budget = "Choose an approximate budget.";
   if (data.message.length < 20 || data.message.length > 4000)
     errors.message = "Tell us a little more (20–4,000 characters).";
   if (!data.consent)
@@ -226,7 +215,7 @@ export async function handleContact(request: Request, env: ContactEnv) {
         to: [env.CONTACT_TO_EMAIL],
         reply_to: data.email,
         subject: `ATRIXX WEB project inquiry — ${data.service}`,
-        text: `Name: ${data.name}\nEmail: ${data.email}\nProject: ${data.service}\nBudget: ${data.budget}\n\n${data.message}\n\nConsent to respond: yes`,
+        text: `Name: ${data.name}\nEmail: ${data.email}\nProject: ${data.service}\n\n${data.message}\n\nConsent to respond: yes`,
       }),
     });
     if (!delivery.ok) throw Error("delivery unavailable");

@@ -4,7 +4,6 @@ const valid = {
   name: "Test Person",
   email: "test@example.com",
   service: "Custom website",
-  budget: "Let’s discuss",
   message: "A thoughtful website for our new business.",
   consent: true,
   website: "",
@@ -32,14 +31,13 @@ const request = (
   });
 afterEach(() => vi.unstubAllGlobals());
 describe("inquiry validation", () => {
-  it("accepts a complete inquiry", () =>
+  it("accepts an inquiry without a budget", () =>
     expect(validateInquiry(valid).errors).toEqual({}));
   it("rejects missing fields", () =>
     expect(Object.keys(validateInquiry({}).errors)).toEqual([
       "name",
       "email",
       "service",
-      "budget",
       "message",
       "consent",
     ]));
@@ -158,5 +156,6 @@ describe("contact endpoint", () => {
     expect(sent.to).toEqual(["owner@example.com"]);
     expect(sent.reply_to).toBe(valid.email);
     expect(sent.text).toContain(valid.message);
+    expect(sent.text).not.toContain("Budget:");
   });
 });

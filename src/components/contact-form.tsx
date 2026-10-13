@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Check } from "lucide-react";
-import { budgets, services, validateInquiry } from "@/lib/contact";
+import { services, validateInquiry } from "@/lib/contact";
 type Turnstile = {
   render: (element: HTMLElement, options: Record<string, unknown>) => string;
   reset: (id: string) => void;
@@ -167,38 +167,18 @@ export function ContactForm() {
           {errors.email && <small id="error-email">{errors.email}</small>}
         </label>
       </div>
-      <div className="form-row">
-        <label>
-          What does your business need? <span>*</span>
-          <select
-            name="service"
-            defaultValue=""
-            required
-            {...invalid("service")}
-          >
-            <option value="" disabled>
-              Select a project type
-            </option>
-            {services.map((s) => (
-              <option key={s}>{s}</option>
-            ))}
-          </select>
-          {errors.service && <small id="error-service">{errors.service}</small>}
-        </label>
-        <label>
-          Approximate budget <span>*</span>
-          <select
-            name="budget"
-            defaultValue="Let’s discuss"
-            {...invalid("budget")}
-          >
-            {budgets.map((b) => (
-              <option key={b}>{b}</option>
-            ))}
-          </select>
-          {errors.budget && <small id="error-budget">{errors.budget}</small>}
-        </label>
-      </div>
+      <label>
+        What does your business need? <span>*</span>
+        <select name="service" defaultValue="" required {...invalid("service")}>
+          <option value="" disabled>
+            Select a project type
+          </option>
+          {services.map((s) => (
+            <option key={s}>{s}</option>
+          ))}
+        </select>
+        {errors.service && <small id="error-service">{errors.service}</small>}
+      </label>
       <label>
         A little about your idea <span>*</span>
         <textarea
