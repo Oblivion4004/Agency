@@ -9,7 +9,7 @@ export default function Privacy() {
         <br />
         about your data.
       </h1>
-      <p>Last updated: 13 October 2026.</p>
+      <p>Last updated: 14 October 2026.</p>
       <h2>Project inquiries</h2>
       <p>
         When you send an inquiry, we use the name, email address, project
@@ -18,7 +18,8 @@ export default function Privacy() {
       </p>
       <h2>Delivery and spam protection</h2>
       <p>
-        When enabled, inquiries are delivered through Resend and checked by
+        When enabled, inquiries are delivered through the configured email
+        provider (Google Gmail or Resend) and checked by
         Cloudflare Turnstile. A short-lived, hashed network identifier is used
         for rate limiting through Upstash. These providers process information
         needed to deliver messages and protect the form.

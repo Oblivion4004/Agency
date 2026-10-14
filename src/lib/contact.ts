@@ -42,8 +42,7 @@ export function validateInquiry(value: unknown): {
     errors.email = "Please enter a valid email address.";
   if (!services.includes(data.service))
     errors.service = "Choose a project type.";
-  if (!data.message.length)
-    errors.message = "Please tell us about your idea.";
+  if (!data.message.length) errors.message = "Please tell us about your idea.";
   else if (data.message.length > 4000)
     errors.message = "Please keep your message within 4,000 characters.";
   if (!data.consent)
@@ -55,6 +54,9 @@ export function validateInquiry(value: unknown): {
 export type ContactEnv = Partial<
   Record<
     | "RESEND_API_KEY"
+    | "EMAIL_PROVIDER"
+    | "GMAIL_USER"
+    | "GMAIL_APP_PASSWORD"
     | "CONTACT_FROM_EMAIL"
     | "CONTACT_TO_EMAIL"
     | "TURNSTILE_SECRET_KEY"
@@ -66,17 +68,31 @@ export type ContactEnv = Partial<
     string
   >
 >;
-export function contactReady(env: ContactEnv) {
-  return [
-    "RESEND_API_KEY",
-    "CONTACT_FROM_EMAIL",
-    "CONTACT_TO_EMAIL",
-    "TURNSTILE_SECRET_KEY",
-    "TURNSTILE_SITE_KEY",
-    "UPSTASH_REDIS_REST_URL",
-    "UPSTASH_REDIS_REST_TOKEN",
-    "RATE_LIMIT_SALT",
-  ].every((key) => Boolean(env[key as keyof ContactEnv]));
+export type ContactDelivery = {
+  ready: boolean;
+  send: (message: {
+    subject: string;
+    text: string;
+    replyTo: string;
+  }) => Promise<void>;
+};
+export function contactReady(env: ContactEnv, delivery?: ContactDelivery) {
+  const emailReady =
+    env.EMAIL_PROVIDER === "gmail"
+      ? Boolean(delivery?.ready)
+      : (!env.EMAIL_PROVIDER || env.EMAIL_PROVIDER === "resend") &&
+        Boolean(env.RESEND_API_KEY && env.CONTACT_FROM_EMAIL);
+  return (
+    emailReady &&
+    [
+      "CONTACT_TO_EMAIL",
+      "TURNSTILE_SECRET_KEY",
+      "TURNSTILE_SITE_KEY",
+      "UPSTASH_REDIS_REST_URL",
+      "UPSTASH_REDIS_REST_TOKEN",
+      "RATE_LIMIT_SALT",
+    ].every((key) => Boolean(env[key as keyof ContactEnv]))
+  );
 }
 const json = (body: unknown, status = 200) =>
   Response.json(body, {
@@ -89,11 +105,17 @@ const json = (body: unknown, status = 200) =>
 async function remote(url: string, init: RequestInit) {
   return fetch(url, { ...init, signal: AbortSignal.timeout(10000) });
 }
-export async function handleContact(request: Request, env: ContactEnv) {
+export async function handleContact(
+  request: Request,
+  env: ContactEnv,
+  options: { delivery?: ContactDelivery; clientIp?: string } = {},
+) {
   if (request.method === "GET")
     return json({
-      ready: contactReady(env),
-      siteKey: contactReady(env) ? env.TURNSTILE_SITE_KEY : null,
+      ready: contactReady(env, options.delivery),
+      siteKey: contactReady(env, options.delivery)
+        ? env.TURNSTILE_SITE_KEY
+        : null,
     });
   if (request.method !== "POST")
     return json({ error: "Method not allowed." }, 405);
@@ -138,7 +160,7 @@ export async function handleContact(request: Request, env: ContactEnv) {
     return json({ error: "Please check the highlighted fields.", errors }, 400);
   if (data.website)
     return json({ error: "This request could not be verified." }, 400);
-  if (!contactReady(env))
+  if (!contactReady(env, options.delivery))
     return json(
       {
         error:
@@ -149,8 +171,10 @@ export async function handleContact(request: Request, env: ContactEnv) {
   if (!data.token)
     return json({ error: "Please complete the security check." }, 400);
   try {
-    // Cloudflare overwrites this header. On other hosts configure a trusted proxy header.
-    const ip = request.headers.get("cf-connecting-ip") || "shared";
+    // The Node route explicitly supplies its hosting platform's trusted IP.
+    // The portable Sites Worker uses Cloudflare's overwritten header.
+    const ip =
+      options.clientIp ?? (request.headers.get("cf-connecting-ip") || "shared");
     const digest = await crypto.subtle.digest(
       "SHA-256",
       new TextEncoder().encode(`${env.RATE_LIMIT_SALT}:${ip}`),
@@ -205,24 +229,33 @@ export async function handleContact(request: Request, env: ContactEnv) {
         { error: "Security check expired or failed. Please try again." },
         400,
       );
-    const delivery = await remote("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${env.RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-        "Idempotency-Key": `inquiry-${await hash(data.token)}`,
-      },
-      body: JSON.stringify({
-        from: env.CONTACT_FROM_EMAIL,
-        to: [env.CONTACT_TO_EMAIL],
-        reply_to: data.email,
-        subject: `Arvion Studios project inquiry — ${data.service}`,
-        text: `Name: ${data.name}\nEmail: ${data.email}\nProject: ${data.service}\n\n${data.message}\n\nConsent to respond: yes`,
-      }),
-    });
-    if (!delivery.ok) throw Error("delivery unavailable");
-    const result = await delivery.json();
-    if (!result.id) throw Error("delivery not confirmed");
+    const message = {
+      replyTo: data.email,
+      subject: `Arvion Studios project inquiry — ${data.service}`,
+      text: `Name: ${data.name}\nEmail: ${data.email}\nProject: ${data.service}\n\n${data.message}\n\nConsent to respond: yes`,
+    };
+    if (env.EMAIL_PROVIDER === "gmail") {
+      await options.delivery!.send(message);
+    } else {
+      const delivery = await remote("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${env.RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+          "Idempotency-Key": `inquiry-${await hash(data.token)}`,
+        },
+        body: JSON.stringify({
+          from: env.CONTACT_FROM_EMAIL,
+          to: [env.CONTACT_TO_EMAIL],
+          reply_to: message.replyTo,
+          subject: message.subject,
+          text: message.text,
+        }),
+      });
+      if (!delivery.ok) throw Error("delivery unavailable");
+      const result = await delivery.json();
+      if (!result.id) throw Error("delivery not confirmed");
+    }
     return json({
       message: "Your inquiry is on its way. Thanks for sharing your idea.",
     });
