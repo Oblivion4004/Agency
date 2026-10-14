@@ -33,6 +33,12 @@ afterEach(() => vi.unstubAllGlobals());
 describe("inquiry validation", () => {
   it("accepts an inquiry without a budget", () =>
     expect(validateInquiry(valid).errors).toEqual({}));
+  it.each(["Cafe website we want", "Hi", "a"])(
+    "accepts a short message: %s",
+    (message) => expect(validateInquiry({ ...valid, message }).errors).toEqual({}),
+  );
+  it("still requires a nonblank message", () =>
+    expect(validateInquiry({ ...valid, message: " \n\t " }).errors.message).toBeTruthy());
   it("rejects missing fields", () =>
     expect(Object.keys(validateInquiry({}).errors)).toEqual([
       "name",

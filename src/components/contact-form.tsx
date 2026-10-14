@@ -184,7 +184,6 @@ export function ContactForm() {
         <textarea
           name="message"
           rows={3}
-          minLength={20}
           maxLength={4000}
           placeholder="Your business, your customers, and what your website should help them do…"
           required

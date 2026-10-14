@@ -42,8 +42,10 @@ export function validateInquiry(value: unknown): {
     errors.email = "Please enter a valid email address.";
   if (!services.includes(data.service))
     errors.service = "Choose a project type.";
-  if (data.message.length < 20 || data.message.length > 4000)
-    errors.message = "Tell us a little more (20–4,000 characters).";
+  if (!data.message.length)
+    errors.message = "Please tell us about your idea.";
+  else if (data.message.length > 4000)
+    errors.message = "Please keep your message within 4,000 characters.";
   if (!data.consent)
     errors.consent = "Please agree so we can respond to your inquiry.";
   if (data.token.length > 2048)
