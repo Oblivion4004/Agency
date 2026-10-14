@@ -112,7 +112,7 @@ export default function Home() {
         <div className="project-grid">
           {projects.map((p, i) => (
             <Link
-              className={`project project-${i}`}
+              className={`project ${"demoUrl" in p ? "project-featured" : `project-${i - 1}`}`}
               key={p.slug}
               href={`/work/${p.slug}`}
             >
@@ -123,7 +123,7 @@ export default function Home() {
                   <i />
                 </span>
                 <span>
-                  {p.category.split(" / ")[0].toUpperCase()} / CONCEPT
+                  {p.category.split(" / ")[0].toUpperCase()} / {"demoUrl" in p ? "WORKING DEMO" : "CONCEPT"}
                 </span>
                 <ArrowUpRight size={14} />
               </div>
@@ -132,7 +132,7 @@ export default function Home() {
                 <span className="project-open">
                   <ArrowUpRight size={24} />
                 </span>
-                <span className="concept-badge">CONCEPT PROJECT</span>
+                <span className="concept-badge">{"demoUrl" in p ? "EXPLORE THE CAFÉ DEMO" : "CONCEPT PROJECT"}</span>
               </div>
               <div className="project-meta">
                 <h3>

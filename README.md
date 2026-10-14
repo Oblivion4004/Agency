@@ -30,7 +30,7 @@ Sites access is private by default. The display name is Arvion Studios; the host
 
 ## Content and accessibility
 
-All three project studies—Daybreak café, Goodform salon, and Homebase local services—are original, explicitly labeled concepts. Replace entries in `src/lib/projects.ts` with approved work when available. No clients, testimonials, business results, or awards are invented. The illustrations are CSS/SVG artwork, and the coffee cup/product studies are procedural Three.js objects. The hero's peach, lilac, and mint controls update both the live cup and the static SVG fallback.
+All four project studies—Atharva Coffee, Daybreak café, Goodform salon, and Homebase local services—are original, explicitly labeled concepts. Replace entries in `src/lib/projects.ts` with approved work when available. No clients, testimonials, business results, or awards are invented. The illustrations are CSS/SVG artwork, and the coffee cup/product studies are procedural Three.js objects. The hero's peach, lilac, and mint controls update both the live cup and the static SVG fallback.
 
 Three.js loads only on supported desktop devices. Small screens, reduced-motion preferences, and save-data mode get static artwork. Offscreen canvases stop rendering. GSAP handles scroll reveals without taking over scrolling; Motion handles state transitions. Controls support keyboard use, visible focus, and touch interaction. Mobile navigation traps focus and makes page content inert while open.
 
@@ -42,3 +42,7 @@ Three.js loads only on supported desktop devices. Small screens, reduced-motion 
 - Measure field Core Web Vitals after launch; no unmeasured performance score is claimed.
 
 Development-only dependency audit: the current Next.js ESLint toolchain inherits the published `braces` advisory through `fast-glob`/`micromatch`. The registry has no patched `braces` release at the time of implementation. Production dependency audit is clean. Do not downgrade Next.js to resolve an unrelated development-tool advisory.
+
+## Atharva Coffee demo
+
+The featured café project links to `/demos/atharva-coffee/index.html`, a self-contained snapshot of the separate `../atharva-coffee` build in `public/demos/atharva-coffee`. It includes the working menu and interactions, with fictional business details clearly labelled. The demo ribbon links back to its Arvion case study. After café updates, rebuild that project, refresh this snapshot and retain its return link before rebuilding Arvion.

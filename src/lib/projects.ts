@@ -1,5 +1,23 @@
 export const projects = [
   {
+    slug: "atharva-coffee",
+    name: "ATHARVA COFFEE",
+    category: "Café / Interactive website",
+    year: "2026",
+    type: "atharva",
+    demoUrl: "/demos/atharva-coffee/index.html",
+    title: "A little pause. A lovely coffee.",
+    description:
+      "A fully browsable website demo for a fictional neighbourhood café, built by Arvion Studios.",
+    brief:
+      "Bring the warmth of a neighbourhood café online, with a menu that is easy to explore and playful details that invite visitors to stay.",
+    response:
+      "Cream and espresso colours, original café illustrations, a scroll-driven coffee cup, a filterable and printable menu, and an interactive croissant game. Responsive layouts and reduced-motion fallbacks keep the experience welcoming.",
+    value:
+      "Designed to show how an independent café can express its personality while keeping its menu and visit information easy to find. Business details are samples; ordering and reservations are not connected.",
+    color: "peach",
+  },
+  {
     slug: "daybreak-coffee",
     name: "DAYBREAK",
     category: "Coffee shop / Menu & discovery",

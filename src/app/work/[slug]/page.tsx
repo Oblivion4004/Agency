@@ -26,7 +26,7 @@ export default async function ProjectPage({
   const p = projects[index];
   const next = projects[(index + 1) % projects.length];
   return (
-    <main id="main" className="case-page">
+    <main id="main" className={`case-page ${"demoUrl" in p ? "case-demo" : ""}`}>
       <section className="section case-intro">
         <Link href="/#work" className="text-link">
           <ArrowLeft size={16} /> Back to possibilities
@@ -46,6 +46,11 @@ export default async function ProjectPage({
             </span>
           </p>
         </div>
+        {"demoUrl" in p && (
+          <a className="pill-button primary case-demo-link" href={p.demoUrl}>
+            Explore the café website <ArrowUpRight size={18} />
+          </a>
+        )}
       </section>
       <ProjectVisual type={p.type} large />
       <section className="section case-story">

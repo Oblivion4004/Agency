@@ -12,7 +12,19 @@ export function ProjectVisual({
       className={`project-art ${type} ${large ? "large" : ""}`}
       aria-hidden="true"
     >
-      {type === "coffee" ? (
+      {type === "atharva" ? (
+        <>
+          <div className="atharva-preview-copy">
+            <span className="atharva-preview-label">ATHARVA COFFEE · CAFÉ CONCEPT</span>
+            <span className="atharva-preview-title">A little pause.<br /><em>A lovely coffee.</em></span>
+            <span className="atharva-preview-note">Slow mornings, warm cups, and something sweet.</span>
+            <span className="atharva-preview-link">TAKE A LOOK INSIDE ↗</span>
+          </div>
+          {/* Original artwork from the café demo; no image processing needed. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="atharva-preview-art" src="/demos/atharva-coffee/assets/coffee-hero.svg" alt="" loading="lazy" width="1000" height="1200" />
+        </>
+      ) : type === "coffee" ? (
         <>
           <span className="art-brand">
             daybreak<span>COFFEE & GOOD COMPANY</span>
