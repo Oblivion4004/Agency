@@ -9,10 +9,6 @@ import { ContactForm } from "@/components/contact-form";
 export default function Home() {
   return (
     <main id="main" className="home-page">
-      <svg className="page-coffee-spill" aria-hidden="true" focusable="false">
-        <path className="spill-river" />
-        <path className="spill-crema" />
-      </svg>
       <MotionEffects />
       <section className="hero arcade-hero" aria-labelledby="hero-title">
         <div className="hero-topline">
@@ -75,9 +71,6 @@ export default function Home() {
           </a>
         </div>
       </section>
-      <div className="spill-runway" aria-hidden="true">
-        <span>AN EXTRA SHOT OF POSSIBILITY ↓</span>
-      </div>
       <div className="discipline-strip">
         <span>LOCAL BUSINESS</span>
         <Plus />
@@ -123,7 +116,8 @@ export default function Home() {
                   <i />
                 </span>
                 <span>
-                  {p.category.split(" / ")[0].toUpperCase()} / {"demoUrl" in p ? "WORKING DEMO" : "CONCEPT"}
+                  {p.category.split(" / ")[0].toUpperCase()} /{" "}
+                  {"demoUrl" in p ? "WORKING DEMO" : "CONCEPT"}
                 </span>
                 <ArrowUpRight size={14} />
               </div>
@@ -132,7 +126,9 @@ export default function Home() {
                 <span className="project-open">
                   <ArrowUpRight size={24} />
                 </span>
-                <span className="concept-badge">{"demoUrl" in p ? "EXPLORE THE CAFÉ DEMO" : "CONCEPT PROJECT"}</span>
+                <span className="concept-badge">
+                  {"demoUrl" in p ? "EXPLORE THE CAFÉ DEMO" : "CONCEPT PROJECT"}
+                </span>
               </div>
               <div className="project-meta">
                 <h3>
@@ -249,9 +245,9 @@ export default function Home() {
         </div>
         <div className="studio-copy">
           <p>
-            I’m the designer and developer behind Arvion Studios. I believe a great
-            local business deserves a website with just as much care, character,
-            and ambition as the people running it.
+            I’m the designer and developer behind Arvion Studios. I believe a
+            great local business deserves a website with just as much care,
+            character, and ambition as the people running it.
           </p>
           <p>
             You bring the business. I bring the design, the code, and a playful

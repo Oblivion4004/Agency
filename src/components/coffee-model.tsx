@@ -1,28 +1,7 @@
 "use client";
-import { useMemo, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useMemo } from "react";
 import * as THREE from "three";
-export function CoffeeModel({
-  color,
-  pourOriginRef,
-}: {
-  color: string;
-  pourOriginRef?: React.RefObject<{ x: number; y: number } | null>;
-}) {
-  const cup = useRef<THREE.Group>(null);
-  const rim = useMemo(() => new THREE.Vector3(), []);
-  useFrame(({ camera, size }) => {
-    if (!cup.current || !pourOriginRef) return;
-    cup.current.updateWorldMatrix(true, false);
-    rim
-      .set(-0.84, 0.7, 0.12)
-      .applyMatrix4(cup.current.matrixWorld)
-      .project(camera);
-    pourOriginRef.current = {
-      x: ((rim.x + 1) * size.width) / 2,
-      y: ((1 - rim.y) * size.height) / 2,
-    };
-  });
+export function CoffeeModel({ color }: { color: string }) {
   const profile = useMemo(
     () =>
       [
@@ -58,8 +37,39 @@ export function CoffeeModel({
       ),
     [],
   );
+  // Follow the tapered ceramic surface so the reverse emblem looks printed on it.
+  const globe = useMemo(() => {
+    const surface = (x: number, y: number) => {
+      const radius = 0.72 + ((y + 0.73) / 1.3) * 0.15;
+      return new THREE.Vector3(
+        x,
+        y,
+        -Math.sqrt(radius * radius - x * x) - 0.015,
+      );
+    };
+    const ellipse = (rx: number, ry: number) =>
+      new THREE.CatmullRomCurve3(
+        Array.from({ length: 64 }, (_, i) => {
+          const angle = (i / 64) * Math.PI * 2;
+          return surface(Math.cos(angle) * rx, Math.sin(angle) * ry);
+        }),
+        true,
+      );
+    return [
+      ellipse(0.34, 0.34),
+      ellipse(0.15, 0.34),
+      ...[-0.15, 0, 0.15].map((y) => {
+        const width = Math.sqrt(0.34 ** 2 - y ** 2);
+        return new THREE.CatmullRomCurve3(
+          Array.from({ length: 24 }, (_, i) =>
+            surface(-width + (i / 23) * width * 2, y),
+          ),
+        );
+      }),
+    ];
+  }, []);
   return (
-    <group ref={cup} position={[-0.16, 0.05, 0]} scale={1.22}>
+    <group position={[-0.16, 0.05, 0]} scale={1.22}>
       <mesh>
         <latheGeometry args={[profile, 64]} />
         <meshStandardMaterial color={color} roughness={0.26} metalness={0.08} />
@@ -94,6 +104,12 @@ export function CoffeeModel({
         <torusGeometry args={[0.2, 0.029, 10, 40, Math.PI]} />
         <meshStandardMaterial color="#302131" roughness={0.7} />
       </mesh>
+      {globe.map((curve, i) => (
+        <mesh key={`globe-${i}`}>
+          <tubeGeometry args={[curve, 64, 0.019, 8, curve.closed]} />
+          <meshStandardMaterial color="#302131" roughness={0.7} />
+        </mesh>
+      ))}
       <mesh position={[0, -1.1, 0]}>
         <cylinderGeometry args={[1.28, 1.18, 0.12, 64]} />
         <meshStandardMaterial color="#b7a0ed" roughness={0.3} />

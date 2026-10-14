@@ -75,17 +75,29 @@ export function SculptureFallback({ color = "#ff9669" }: { color?: string }) {
           fill="#fff0cd"
         />
         <path d="M300 239 L300 202" stroke="#fff0cd" strokeWidth="3" />
-        <g fill="#3c2929">
-          <ellipse cx="265" cy="315" rx="9" ry="13" />
-          <ellipse cx="326" cy="315" rx="9" ry="13" />
+        <g className="fallback-face">
+          <g fill="#3c2929">
+            <ellipse cx="265" cy="315" rx="9" ry="13" />
+            <ellipse cx="326" cy="315" rx="9" ry="13" />
+          </g>
+          <path
+            d="M265 348 Q296 383 330 348"
+            fill="none"
+            stroke="#3c2929"
+            strokeWidth="8"
+            strokeLinecap="round"
+          />
         </g>
-        <path
-          d="M265 348 Q296 383 330 348"
+        <g
+          className="fallback-globe"
           fill="none"
           stroke="#3c2929"
-          strokeWidth="8"
-          strokeLinecap="round"
-        />
+          strokeWidth="5"
+        >
+          <circle cx="298" cy="335" r="40" />
+          <ellipse cx="298" cy="335" rx="17" ry="40" />
+          <path d="M258 335 H338 M263 316 H333 M263 354 H333" />
+        </g>
         <path
           d="M198 272 L210 351"
           stroke="#fff1d3"

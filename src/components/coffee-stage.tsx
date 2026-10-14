@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { createCoffeeSpill } from "./coffee-spill";
 import { Sculpture } from "./sculpture";
 const finishes = [
   { name: "Peach", color: "#ff9669" },
@@ -12,8 +11,6 @@ const finishes = [
 export function CoffeeStage() {
   const stage = useRef<HTMLDivElement>(null);
   const progress = useRef(0);
-  const wash = useRef(0);
-  const pourOriginRef = useRef<{ x: number; y: number } | null>(null);
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const media = gsap.matchMedia();
@@ -38,40 +35,16 @@ export function CoffeeStage() {
         timeline.to(progress, { current: 1, duration: 1, ease: "none" }, 0);
         timeline.to(
           stage.current,
-          { "--cup-turn": "360deg", duration: 0.48, ease: "none" },
+          { "--cup-turn": "180deg", duration: 1, ease: "none" },
           0,
         );
-        timeline.to(
+        timeline.set(
           stage.current,
-          {
-            "--cup-tip": "-50deg",
-            "--drip-show": 0,
-            "--drip-fall": "65px",
-            duration: 0.3,
-            ease: "none",
-          },
-          0.48,
-        );
-        gsap.to(wash, {
-          current: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".spill-runway",
-            start: "top 95%",
-            end: "bottom 85%",
-            scrub: 0.4,
-          },
-        });
-        const cleanup = createCoffeeSpill(
-          stage.current,
-          progress,
-          pourOriginRef,
-          wash,
+          { "--face-show": 0, "--globe-show": 1 },
+          0.5,
         );
         return () => {
-          cleanup();
           progress.current = 0;
-          wash.current = 0;
         };
       },
     );
@@ -94,11 +67,7 @@ export function CoffeeStage() {
         <span>✳</span>
       </div>
       <div className="hero-art">
-        <Sculpture
-          color={finishes[finish].color}
-          progress={progress}
-          pourOriginRef={pourOriginRef}
-        />
+        <Sculpture color={finishes[finish].color} progress={progress} />
       </div>
       <div className="coffee-controls">
         <span>CHOOSE YOUR CUP</span>
@@ -120,7 +89,7 @@ export function CoffeeStage() {
         </span>
       </div>
       <span className="coffee-coordinate">
-        SCROLL TO POUR. WATCH THE PAGE CHANGE.
+        SCROLL TO TURN. YOUR WORLD, ONLINE.
       </span>
     </div>
   );
