@@ -45,4 +45,4 @@ Development-only dependency audit: the current Next.js ESLint toolchain inherits
 
 ## Atharva Coffee demo
 
-The featured café project links to `/demos/atharva-coffee/index.html`, a self-contained snapshot of the separate `../atharva-coffee` build in `public/demos/atharva-coffee`. It includes the working menu and interactions, with fictional business details clearly labelled. The demo ribbon links back to its Arvion case study. After café updates, rebuild that project, refresh this snapshot and retain its return link before rebuilding Arvion.
+The featured café case study links to the live website at `https://atharvacoffee.store`. A self-contained snapshot of the separate `../atharva-coffee` build remains in `public/demos/atharva-coffee`, including the artwork used by its portfolio preview. The café is a fictional business concept with sample details.

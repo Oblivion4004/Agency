@@ -48,7 +48,7 @@ export default async function ProjectPage({
         </div>
         {"demoUrl" in p && (
           <a className="pill-button primary case-demo-link" href={p.demoUrl}>
-            Explore the café website <ArrowUpRight size={18} />
+            Visit the live café website <ArrowUpRight size={18} />
           </a>
         )}
       </section>

@@ -5,7 +5,7 @@ export const projects = [
     category: "Café / Interactive website",
     year: "2026",
     type: "atharva",
-    demoUrl: "/demos/atharva-coffee/index.html",
+    demoUrl: "https://atharvacoffee.store",
     title: "A little pause. A lovely coffee.",
     description:
       "A fully browsable website demo for a fictional neighbourhood café, built by Arvion Studios.",
