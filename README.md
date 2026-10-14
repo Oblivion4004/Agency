@@ -18,11 +18,11 @@ Requires Node.js 22+ and npm. Run `npm ci`, then `npm run dev`. If port 3000 is 
 
 Copy `.env.example` to `.env.local` for local development, or set the named runtime variables in your deployment platform. The template selects Gmail for the standard Node.js/Next.js deployment: `EMAIL_PROVIDER=gmail`, `GMAIL_USER=atharvasandipgadhave@gmail.com`, and `CONTACT_TO_EMAIL=atrixxweb@gmail.com`. Set `GMAIL_APP_PASSWORD` to a Google App Password for that sending account, never its normal login password. Keep the App Password in server-only environment settings, not chat, source files, or any `NEXT_PUBLIC_` variable. No Resend account or custom sending domain is needed for this mode.
 
-Also configure Cloudflare Turnstile site and secret keys, an Upstash Redis REST database, a long random `RATE_LIMIT_SALT`, and the exact public `SITE_URL`. Both Gmail credentials and spam protection must be configured before the form reports ready. Use a Node.js runtime with outbound Gmail SMTP over TLS on port 465. The current portable Sites Worker cannot run Nodemailer; setting Gmail mode there intentionally leaves delivery unavailable. It can still use the existing Resend transport with `EMAIL_PROVIDER=resend`, `RESEND_API_KEY`, and `CONTACT_FROM_EMAIL`. Never commit credentials.
+Also configure Cloudflare Turnstile site and secret keys and the exact public `SITE_URL`. Gmail credentials and Turnstile must be configured before the form reports ready. Upstash Redis and a long random `RATE_LIMIT_SALT` are optional; when all three rate-limit settings are present, the form limits repeated submissions. Use a Node.js runtime with outbound Gmail SMTP over TLS on port 465. The current portable Sites Worker cannot run Nodemailer; setting Gmail mode there intentionally leaves delivery unavailable. It can still use the existing Resend transport with `EMAIL_PROVIDER=resend`, `RESEND_API_KEY`, and `CONTACT_FROM_EMAIL`. Never commit credentials.
 
 Allow the site's hostname in Turnstile. The widget sends action `contact`; the server verifies both action and hostname. The form fails closed if email or protection services are missing. An unavailable desk never presents a false success. Success means the configured provider accepted the message, not that it reached the recipient's inbox. Gmail messages use the authenticated account as sender, the fixed configured destination, and the visitor's address as Reply-To. SMTP errors are not exposed to visitors and are not automatically retried.
 
-The rate limit allows five attempts per ten minutes. The Sites Worker uses Cloudflare's trusted `CF-Connecting-IP` header. The Node route uses Vercel's overwritten `X-Forwarded-For` only when the server environment has `VERCEL=1`; other Node hosts use a shared fallback bucket. Identifiers are stored only as salted hashes with a ten-minute TTL. Before deploying on another platform, adapt the trusted proxy header to that host's documented behavior; do not trust arbitrary forwarded headers.
+When Upstash is configured, the rate limit allows five attempts per ten minutes. The Sites Worker uses Cloudflare's trusted `CF-Connecting-IP` header. The Node route uses Vercel's overwritten `X-Forwarded-For` only when the server environment has `VERCEL=1`; other Node hosts use a shared fallback bucket. Identifiers are stored only as salted hashes with a ten-minute TTL. Without Upstash, Turnstile and the honeypot still reject automated submissions, but repeated valid submissions are not counted across server instances. Before deploying on another platform, adapt the trusted proxy header to that host's documented behavior; do not trust arbitrary forwarded headers.
 
 ## Deployment modes
 
@@ -38,7 +38,7 @@ Three.js loads only on supported desktop devices. Small screens, reduced-motion 
 
 ## Remaining launch configuration
 
-- Set production inbox, sender domain, delivery credentials, spam-protection keys, and rate-limit storage.
+- Set production inbox, delivery credentials, and spam-protection keys; optionally add rate-limit storage.
 - Replace concept work only when actual project material is available.
 - Verify real email delivery and real-device behavior on the final domain.
 - Measure field Core Web Vitals after launch; no unmeasured performance score is claimed.

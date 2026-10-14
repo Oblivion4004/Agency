@@ -67,6 +67,17 @@ describe("contact endpoint", () => {
     );
     expect(await response.json()).toEqual({ ready: true, siteKey: "public" });
   });
+  it("reports ready without optional rate-limit storage", async () => {
+    const noDatabase = { ...env };
+    delete noDatabase.UPSTASH_REDIS_REST_URL;
+    delete noDatabase.UPSTASH_REDIS_REST_TOKEN;
+    delete noDatabase.RATE_LIMIT_SALT;
+    const response = await handleContact(
+      new Request("https://studio.example.com/api/contact"),
+      noDatabase,
+    );
+    expect(await response.json()).toEqual({ ready: true, siteKey: "public" });
+  });
   it("rejects cross-origin requests before external calls", async () => {
     const mock = vi.fn();
     vi.stubGlobal("fetch", mock);
@@ -163,5 +174,24 @@ describe("contact endpoint", () => {
     expect(sent.reply_to).toBe(valid.email);
     expect(sent.text).toContain(valid.message);
     expect(sent.text).not.toContain("Budget:");
+  });
+  it("delivers without optional rate-limit storage", async () => {
+    const noDatabase = { ...env };
+    delete noDatabase.UPSTASH_REDIS_REST_URL;
+    delete noDatabase.UPSTASH_REDIS_REST_TOKEN;
+    delete noDatabase.RATE_LIMIT_SALT;
+    const mock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        Response.json({
+          success: true,
+          hostname: "studio.example.com",
+          action: "contact",
+        }),
+      )
+      .mockResolvedValueOnce(Response.json({ id: "email-test" }));
+    vi.stubGlobal("fetch", mock);
+    expect((await handleContact(request(), noDatabase)).status).toBe(200);
+    expect(mock).toHaveBeenCalledTimes(2);
   });
 });

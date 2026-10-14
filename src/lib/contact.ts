@@ -88,10 +88,14 @@ export function contactReady(env: ContactEnv, delivery?: ContactDelivery) {
       "CONTACT_TO_EMAIL",
       "TURNSTILE_SECRET_KEY",
       "TURNSTILE_SITE_KEY",
-      "UPSTASH_REDIS_REST_URL",
-      "UPSTASH_REDIS_REST_TOKEN",
-      "RATE_LIMIT_SALT",
     ].every((key) => Boolean(env[key as keyof ContactEnv]))
+  );
+}
+function rateLimitReady(env: ContactEnv) {
+  return Boolean(
+    env.UPSTASH_REDIS_REST_URL &&
+      env.UPSTASH_REDIS_REST_TOKEN &&
+      env.RATE_LIMIT_SALT,
   );
 }
 const json = (body: unknown, status = 200) =>
@@ -175,37 +179,39 @@ export async function handleContact(
     // The portable Sites Worker uses Cloudflare's overwritten header.
     const ip =
       options.clientIp ?? (request.headers.get("cf-connecting-ip") || "shared");
-    const digest = await crypto.subtle.digest(
-      "SHA-256",
-      new TextEncoder().encode(`${env.RATE_LIMIT_SALT}:${ip}`),
-    );
-    const key =
-      "atrixx:contact:" +
-      Array.from(new Uint8Array(digest))
-        .map((b) => b.toString(16).padStart(2, "0"))
-        .join("");
-    const limit = await remote(env.UPSTASH_REDIS_REST_URL!, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${env.UPSTASH_REDIS_REST_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify([
-        "EVAL",
-        "local n=redis.call('INCR',KEYS[1]); if n==1 then redis.call('EXPIRE',KEYS[1],600) end; return n",
-        "1",
-        key,
-      ]),
-    });
-    if (!limit.ok) throw Error("rate limit unavailable");
-    const limited = await limit.json();
-    if (typeof limited.result !== "number")
-      throw Error("rate limit unavailable");
-    if (limited.result > 5)
-      return json(
-        { error: "Too many attempts. Please try again in 10 minutes." },
-        429,
+    if (rateLimitReady(env)) {
+      const digest = await crypto.subtle.digest(
+        "SHA-256",
+        new TextEncoder().encode(`${env.RATE_LIMIT_SALT}:${ip}`),
       );
+      const key =
+        "atrixx:contact:" +
+        Array.from(new Uint8Array(digest))
+          .map((b) => b.toString(16).padStart(2, "0"))
+          .join("");
+      const limit = await remote(env.UPSTASH_REDIS_REST_URL!, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${env.UPSTASH_REDIS_REST_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify([
+          "EVAL",
+          "local n=redis.call('INCR',KEYS[1]); if n==1 then redis.call('EXPIRE',KEYS[1],600) end; return n",
+          "1",
+          key,
+        ]),
+      });
+      if (!limit.ok) throw Error("rate limit unavailable");
+      const limited = await limit.json();
+      if (typeof limited.result !== "number")
+        throw Error("rate limit unavailable");
+      if (limited.result > 5)
+        return json(
+          { error: "Too many attempts. Please try again in 10 minutes." },
+          429,
+        );
+    }
     const verification = await remote(
       "https://challenges.cloudflare.com/turnstile/v0/siteverify",
       {

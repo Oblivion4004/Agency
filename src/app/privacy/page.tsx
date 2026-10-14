@@ -21,7 +21,7 @@ export default function Privacy() {
         When enabled, inquiries are delivered through the configured email
         provider (Google Gmail or Resend) and checked by
         Cloudflare Turnstile. A short-lived, hashed network identifier is used
-        for rate limiting through Upstash. These providers process information
+        for optional rate limiting through Upstash. These providers process information
         needed to deliver messages and protect the form.
       </p>
       <h2>Storage and your choices</h2>
