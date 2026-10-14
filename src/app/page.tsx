@@ -249,7 +249,7 @@ export default function Home() {
         </div>
         <div className="studio-copy">
           <p>
-            I’m the designer and developer behind ATRIXX WEB. I believe a great
+            I’m the designer and developer behind Arvion Studios. I believe a great
             local business deserves a website with just as much care, character,
             and ambition as the people running it.
           </p>

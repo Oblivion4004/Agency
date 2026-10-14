@@ -8,7 +8,7 @@ export default function NotFound() {
         This page doesn’t exist. There’s plenty to explore back at the studio.
       </p>
       <Link className="pill-button primary" href="/">
-        Back to ATRIXX WEB ↗
+        Back to Arvion Studios ↗
       </Link>
     </main>
   );

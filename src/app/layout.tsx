@@ -6,14 +6,14 @@ import "./coffee-theme.css";
 import { Header, Footer } from "@/components/shell";
 export const metadata: Metadata = {
   title: {
-    default: "ATRIXX WEB — Small business. Big website energy.",
-    template: "%s — ATRIXX WEB",
+    default: "Arvion Studios — Small business. Big website energy.",
+    template: "%s — Arvion Studios",
   },
   description:
     "Premium custom websites for cafés, shops, salons, and local services. Designed and developed by Atharva.",
   robots: { index: true, follow: true },
   openGraph: {
-    title: "ATRIXX WEB — Level up your business online.",
+    title: "Arvion Studios — Level up your business online.",
     description:
       "Everyday businesses. Extraordinary websites. Custom design and development by Atharva.",
     type: "website",

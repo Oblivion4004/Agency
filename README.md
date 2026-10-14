@@ -1,4 +1,4 @@
-# ATRIXX WEB — independent digital studio
+# Arvion Studios — independent digital studio
 
 A custom Next.js / TypeScript portfolio built for Atharva. The arcade edition pairs an interactive coffee cup with direct messaging about premium websites for everyday businesses. The visual direction and information architecture are documented in [DESIGN.md](./DESIGN.md).
 
@@ -26,7 +26,7 @@ The rate limit allows five attempts per ten minutes. On Cloudflare, the network 
 
 The normal build runs Next.js with `/api/contact`. The Sites build prerenders the `.tsx` pages and bundles static assets into a portable Worker with the identical contact handler. `pageExtensions` deliberately excludes the Node-only `route.ts` from that static export. The generated Worker has no Node dependencies. Assets are embedded for portability; this tradeoff is appropriate for the compact portfolio, but a larger media library should move to a CDN or native asset binding.
 
-Sites access is private by default. The display name is ATRIXX WEB; the hosting slug was allocated under the initial working name before the branding reply. A custom production domain can be attached separately.
+Sites access is private by default. The display name is Arvion Studios; the hosting slug was allocated under the initial working name before the branding reply. A custom production domain can be attached separately.
 
 ## Content and accessibility
 

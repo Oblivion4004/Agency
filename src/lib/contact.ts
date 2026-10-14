@@ -214,7 +214,7 @@ export async function handleContact(request: Request, env: ContactEnv) {
         from: env.CONTACT_FROM_EMAIL,
         to: [env.CONTACT_TO_EMAIL],
         reply_to: data.email,
-        subject: `ATRIXX WEB project inquiry — ${data.service}`,
+        subject: `Arvion Studios project inquiry — ${data.service}`,
         text: `Name: ${data.name}\nEmail: ${data.email}\nProject: ${data.service}\n\n${data.message}\n\nConsent to respond: yes`,
       }),
     });

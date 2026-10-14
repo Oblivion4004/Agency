@@ -16,7 +16,7 @@ for (const route of [
     {},
   );
   assert.equal(response.status, 200, route);
-  assert.match(await response.text(), /ATRIXX WEB/);
+  assert.match(await response.text(), /Arvion Studios/);
 }
 assert.equal(
   (await worker.fetch(new Request("https://studio.example.com/missing"), {}))
