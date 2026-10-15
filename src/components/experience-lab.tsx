@@ -66,7 +66,7 @@ export function ExperienceLab() {
                 <br />A better impression.
               </h3>
               <p>
-                Move your cursor. Change the finish.
+                Click and drag to rotate 360°. Change the finish.
                 <br />
                 Let customers explore what makes your product special.
               </p>
@@ -103,7 +103,7 @@ export function ExperienceLab() {
               <Sculpture color={colors[material]} product />
             </div>
             <span className="lab-caption">
-              TRY A FINISH · INTERACTIVE PRODUCT CONCEPT
+              DRAG TO EXPLORE EVERY ANGLE · TRY A FINISH
             </span>
           </>
         ) : tab === 1 ? (

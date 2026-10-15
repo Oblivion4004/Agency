@@ -1,6 +1,6 @@
 "use client";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, Lightformer, Float } from "@react-three/drei";
+import { Environment, Lightformer, Float, TrackballControls } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 import { CoffeeModel } from "./coffee-model";
@@ -15,7 +15,7 @@ function Form({
 }) {
   const mesh = useRef<THREE.Group>(null);
   useFrame((state, delta) => {
-    if (!mesh.current) return;
+    if (!mesh.current || product) return;
     const scroll = product ? 0 : (progress?.current ?? 0);
     const targetY =
       scroll * Math.PI +
@@ -41,7 +41,7 @@ function Form({
     );
   });
   return (
-    <Float speed={1.4} rotationIntensity={0.12} floatIntensity={0.25}>
+    <Float enabled={!product} speed={1.4} rotationIntensity={0.12} floatIntensity={0.25}>
       <group ref={mesh} rotation={[0.3, 0, product ? -0.2 : -0.12]}>
         {product ? (
           <>
@@ -119,6 +119,16 @@ export default function SculptureCanvas({
       <ambientLight intensity={0.35} />
       <directionalLight position={[3, 4, 5]} intensity={3} />
       <Form color={color} product={product} progress={progress} />
+      {product && (
+        <TrackballControls
+          makeDefault
+          enabled={active}
+          noZoom
+          noPan
+          staticMoving
+          rotateSpeed={3}
+        />
+      )}
       <Environment resolution={128}>
         <Lightformer intensity={4} position={[0, 4, -2]} scale={[10, 3, 1]} />
         <Lightformer

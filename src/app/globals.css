@@ -1573,6 +1573,12 @@ button {
   width: 480px;
   height: 480px;
 }
+.lab-sculpture canvas {
+  cursor: grab;
+}
+.lab-sculpture canvas:active {
+  cursor: grabbing;
+}
 .lab-caption {
   position: absolute;
   right: 25px;
